@@ -1,0 +1,25 @@
+<svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <title>Project Atlas — Minimal A</title>
+
+  <!-- Background -->
+  <rect width="512" height="512" fill="#0A1628" rx="64"/>
+
+  <!-- Single geometric A — no decoration, pure form -->
+  <!-- Outer triangle -->
+  <polygon
+    points="256,80 420,432 92,432"
+    fill="none"
+    stroke="#00D4AA"
+    stroke-width="6"
+    stroke-linejoin="round"
+  />
+
+  <!-- Inner negative space triangle (the A counter) -->
+  <polygon
+    points="256,200 320,340 192,340"
+    fill="#0A1628"
+  />
+
+  <!-- Crossbar extends past the triangle edges -->
+  <line x1="72" y1="340" x2="440" y2="340" stroke="#00D4AA" stroke-width="6" stroke-linecap="round"/>
+</svg>

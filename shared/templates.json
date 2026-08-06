@@ -1,0 +1,12 @@
+{
+	"version": 1,
+	"categories": {
+		"web": ["typescript/sveltekit", "typescript/nextjs", "typescript/react", "typescript/node-api"],
+		"node": ["typescript/node-cli", "typescript/node-lib", "typescript/node-worker", "typescript/bun-package"],
+		"python": ["python/fastapi", "python/flask", "python/cli"],
+		"rust": ["rust/cli"],
+		"swift": ["swift/macos", "swift/ios"],
+		"android": ["android/quest-vr"],
+		"raycast": ["typescript/raycast-extension"]
+	}
+}

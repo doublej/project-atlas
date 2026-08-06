@@ -1,0 +1,31 @@
+<svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <title>Project Atlas — Three Lines A</title>
+
+  <!-- Background -->
+  <rect width="512" height="512" fill="#0A1628" rx="64"/>
+
+  <!--
+    Three lines = three components converging (API, Browser, Picker).
+    The A emerges from their intersection.
+    Inspired by the existing icon's "three interlocking curved lines" motif.
+  -->
+
+  <!-- Line 1: Left leg, continues past apex -->
+  <line x1="100" y1="432" x2="320" y2="80"
+    stroke="#00D4AA" stroke-width="5" stroke-linecap="round"/>
+
+  <!-- Line 2: Right leg, continues past apex -->
+  <line x1="412" y1="432" x2="192" y2="80"
+    stroke="#00D4AA" stroke-width="5" stroke-linecap="round"/>
+
+  <!-- Line 3: Crossbar, extends edge to edge -->
+  <line x1="80" y1="320" x2="432" y2="320"
+    stroke="#00D4AA" stroke-width="5" stroke-linecap="round"/>
+
+  <!-- Intersection highlight at apex -->
+  <circle cx="256" cy="142" r="10" fill="#FF6B35"/>
+
+  <!-- Intersection highlights at crossbar -->
+  <circle cx="195" cy="320" r="5" fill="#FF6B35" opacity="0.7"/>
+  <circle cx="317" cy="320" r="5" fill="#FF6B35" opacity="0.7"/>
+</svg>

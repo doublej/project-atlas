@@ -1,0 +1,35 @@
+<svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <title>Project Atlas — Crosshair A</title>
+
+  <!-- Background -->
+  <rect width="512" height="512" fill="#0A1628" rx="64"/>
+
+  <!-- Crosshair / survey scope -->
+  <g stroke="#00D4AA" stroke-width="1" opacity="0.2">
+    <!-- Outer circle -->
+    <circle cx="256" cy="256" r="200" fill="none"/>
+    <!-- Inner circle -->
+    <circle cx="256" cy="256" r="100" fill="none"/>
+    <!-- Cross lines -->
+    <line x1="256" y1="40" x2="256" y2="472"/>
+    <line x1="40" y1="256" x2="472" y2="256"/>
+  </g>
+
+  <!-- Tick marks on crosshair -->
+  <g stroke="#00D4AA" stroke-width="2" opacity="0.35">
+    <line x1="256" y1="52" x2="256" y2="68"/>
+    <line x1="256" y1="444" x2="256" y2="460"/>
+    <line x1="52" y1="256" x2="68" y2="256"/>
+    <line x1="444" y1="256" x2="460" y2="256"/>
+  </g>
+
+  <!-- The A — centred in crosshair -->
+  <g fill="#00D4AA">
+    <polygon points="256,100 156,412 194,412 256,196"/>
+    <polygon points="256,100 356,412 318,412 256,196"/>
+    <rect x="188" y="316" width="136" height="28" rx="2"/>
+  </g>
+
+  <!-- Centre dot -->
+  <circle cx="256" cy="256" r="4" fill="#FF6B35"/>
+</svg>

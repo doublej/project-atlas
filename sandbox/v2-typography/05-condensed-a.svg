@@ -1,0 +1,29 @@
+<svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <title>Project Atlas — Condensed A</title>
+  <!-- Background -->
+  <rect width="512" height="512" fill="#0A1628" rx="64"/>
+
+  <!-- Vertical reference lines -->
+  <g stroke="#00D4AA" stroke-width="0.5" opacity="0.1">
+    <line x1="200" y1="60" x2="200" y2="452"/>
+    <line x1="256" y1="60" x2="256" y2="452"/>
+    <line x1="312" y1="60" x2="312" y2="452"/>
+  </g>
+
+  <!--
+    Condensed A — tall, narrow, compressed width.
+    Tight proportions, vertical emphasis. Magazine masthead energy.
+  -->
+  <g fill="#00D4AA">
+    <!-- Left leg -->
+    <polygon points="256,76 196,436 224,436 256,148"/>
+    <!-- Right leg -->
+    <polygon points="256,76 316,436 288,436 256,148"/>
+    <!-- Crossbar -->
+    <rect x="210" y="296" width="92" height="26" rx="1"/>
+  </g>
+
+  <!-- Apex marker -->
+  <circle cx="256" cy="68" r="6" fill="#FF6B35"/>
+  <circle cx="256" cy="68" r="11" fill="none" stroke="#FF6B35" stroke-width="1.5"/>
+</svg>

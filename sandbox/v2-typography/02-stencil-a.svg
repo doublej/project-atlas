@@ -1,0 +1,36 @@
+<svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <title>Project Atlas — Stencil A</title>
+  <!-- Background -->
+  <rect width="512" height="512" fill="#0A1628" rx="64"/>
+
+  <!-- Grid dots -->
+  <g fill="#00D4AA" opacity="0.12">
+    <circle cx="96" cy="96" r="2"/><circle cx="176" cy="96" r="2"/>
+    <circle cx="256" cy="96" r="2"/><circle cx="336" cy="96" r="2"/>
+    <circle cx="416" cy="96" r="2"/>
+    <circle cx="96" cy="416" r="2"/><circle cx="176" cy="416" r="2"/>
+    <circle cx="256" cy="416" r="2"/><circle cx="336" cy="416" r="2"/>
+    <circle cx="416" cy="416" r="2"/>
+  </g>
+
+  <!--
+    Stencil A — legs are broken by gaps (stencil bridges).
+    Military cartography / survey marker aesthetic.
+  -->
+  <g fill="#00D4AA">
+    <!-- Left leg, upper segment -->
+    <polygon points="256,100 204,232 228,232 256,168"/>
+    <!-- Left leg, lower segment (gap = stencil bridge) -->
+    <polygon points="196,256 140,400 178,400 220,256"/>
+    <!-- Right leg, upper segment -->
+    <polygon points="256,100 308,232 284,232 256,168"/>
+    <!-- Right leg, lower segment -->
+    <polygon points="316,256 372,400 334,400 292,256"/>
+    <!-- Crossbar — also broken -->
+    <rect x="172" y="310" width="56" height="28"/>
+    <rect x="284" y="310" width="56" height="28"/>
+  </g>
+
+  <!-- Apex marker -->
+  <circle cx="256" cy="92" r="7" fill="#FF6B35"/>
+</svg>

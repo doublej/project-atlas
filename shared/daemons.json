@@ -1,0 +1,157 @@
+{
+  "version": 1,
+  "daemons": [
+    {
+      "label": "com.jurrejan.atlas-api",
+      "name": "Atlas API",
+      "port": 47891,
+      "project": "/Users/jurrejan/Documents/development/multi-stack/project-atlas/atlas-api",
+      "plist": "/Users/jurrejan/Documents/development/multi-stack/project-atlas/atlas-api/launchd/com.jurrejan.atlas-api.plist",
+      "logs": {
+        "stdout": "/tmp/atlas-api.log",
+        "stderr": "/tmp/atlas-api.error.log"
+      },
+      "selfManaged": true
+    },
+    {
+      "label": "com.jurrejan.reminders-bridge",
+      "name": "Reminders Bridge",
+      "project": "/Users/jurrejan/Documents/development/python/reminders-bridge",
+      "plist": "/Users/jurrejan/Documents/development/python/reminders-bridge/launchd/com.jurrejan.reminders-bridge.plist",
+      "logs": {
+        "stdout": "~/Library/Logs/reminders-bridge.log",
+        "stderr": "~/Library/Logs/reminders-bridge.log"
+      }
+    },
+    {
+      "label": "com.jurrejan.dlwatcher",
+      "name": "Download Watcher",
+      "project": "/Users/jurrejan/Documents/development/dl-watcher",
+      "plist": "/Users/jurrejan/Documents/development/dl-watcher/launchd/com.jurrejan.dlwatcher.plist",
+      "logs": {
+        "stdout": "~/Library/Logs/dl-watcher.stdout.log",
+        "stderr": "~/Library/Logs/dl-watcher.stderr.log"
+      }
+    },
+    {
+      "label": "com.jurrejan.vpn-subnet-fix",
+      "name": "VPN Subnet Fix",
+      "project": "/Users/jurrejan/tools/vpn-subnet-fix",
+      "plist": "/Users/jurrejan/tools/vpn-subnet-fix/com.jurrejan.vpn-subnet-fix.plist"
+    },
+    {
+      "label": "com.jurrejan.parakeet",
+      "name": "Parakeet ASR Server",
+      "port": 8765,
+      "project": "/Users/jurrejan/Documents/development/python/parakeet-server",
+      "plist": "/Users/jurrejan/Documents/development/python/parakeet-server/launchd/com.jurrejan.parakeet.plist",
+      "logs": {
+        "stdout": "/Users/jurrejan/Documents/development/python/parakeet-server/logs/parakeet.out.log",
+        "stderr": "/Users/jurrejan/Documents/development/python/parakeet-server/logs/parakeet.err.log"
+      }
+    },
+    {
+      "label": "com.jurrejan.macos-data-keeper",
+      "name": "macOS Data Keeper",
+      "project": "/Users/jurrejan/Documents/development/python/macos-data-keeper",
+      "plist": "/Users/jurrejan/Documents/development/python/macos-data-keeper/launchd/com.jurrejan.macos-data-keeper.plist",
+      "logs": {
+        "stdout": "~/Library/Logs/macos-data-keeper/stdout.log",
+        "stderr": "~/Library/Logs/macos-data-keeper/stderr.log"
+      }
+    },
+    {
+      "label": "com.jurrejan.disk-autoclean",
+      "name": "Disk Autoclean",
+      "project": "/Users/jurrejan/Documents/development/_management/disk",
+      "plist": "/Users/jurrejan/Documents/development/_management/disk/launchd/com.jurrejan.disk-autoclean.plist",
+      "logs": {
+        "stdout": "~/Library/Logs/disk-autoclean/launchd.out.log",
+        "stderr": "~/Library/Logs/disk-autoclean/launchd.err.log"
+      }
+    },
+    {
+      "label": "com.jurrejan.aw-backup",
+      "name": "ActivityWatch NAS Backup",
+      "project": "/Users/jurrejan/.local/bin",
+      "plist": "/Users/jurrejan/Library/LaunchAgents/com.jurrejan.aw-backup.plist",
+      "logs": {
+        "stdout": "~/Library/Logs/aw-nas-backup/backup.log",
+        "stderr": "~/Library/Logs/aw-nas-backup/backup.log"
+      }
+    },
+    {
+      "label": "com.activitywatch.watchdog",
+      "name": "ActivityWatch Watchdog",
+      "project": "/Users/jurrejan/Library/Scripts",
+      "plist": "/Users/jurrejan/Library/LaunchAgents/com.activitywatch.watchdog.plist",
+      "logs": {
+        "stdout": "~/Library/Logs/aw-watchdog.log",
+        "stderr": "~/Library/Logs/aw-watchdog.log"
+      }
+    },
+    {
+      "label": "com.claude.statusline-cache",
+      "name": "Claude Statusline Cache",
+      "project": "/Users/jurrejan/Documents/development/_management/claude-history-browser",
+      "plist": "/Users/jurrejan/Documents/development/_management/claude-history-browser/launchd/com.claude.statusline-cache.plist",
+      "logs": {
+        "stdout": "~/.claude/statusline-cache.log",
+        "stderr": "~/.claude/statusline-cache.log"
+      }
+    },
+    {
+      "label": "com.doublej.gh-inbox",
+      "name": "GitHub Inbox Cache",
+      "project": "/Users/jurrejan/.local/bin",
+      "plist": "/Users/jurrejan/Library/LaunchAgents/com.doublej.gh-inbox.plist",
+      "logs": {
+        "stdout": "~/Library/Logs/gh-inbox.log",
+        "stderr": "~/Library/Logs/gh-inbox.log"
+      }
+    },
+    {
+      "label": "com.jj.poolsuite-watch",
+      "name": "Poolsuite Mail Watcher",
+      "project": "/Users/jurrejan/Documents/development/_life",
+      "plist": "/Users/jurrejan/Documents/development/_life/.automation/com.jj.poolsuite-watch.plist",
+      "logs": {
+        "stdout": "/Users/jurrejan/Documents/development/_life/.logs/poolsuite_watch.out.log",
+        "stderr": "/Users/jurrejan/Documents/development/_life/.logs/poolsuite_watch.err.log"
+      }
+    },
+    {
+      "label": "com.jurrejan.suno-preview",
+      "name": "Suno Live Preview",
+      "port": 47895,
+      "project": "/Users/jurrejan/Documents/development/_management/codex-skills/craft-suno-songs",
+      "plist": "/Users/jurrejan/Documents/development/_management/codex-skills/craft-suno-songs/launchd/com.jurrejan.suno-preview.plist",
+      "logs": {
+        "stdout": "~/Library/Logs/suno-preview.log",
+        "stderr": "~/Library/Logs/suno-preview.log"
+      }
+    },
+    {
+      "label": "com.jurrejan.suno-feedback",
+      "name": "Suno Skill Feedback",
+      "port": 47894,
+      "project": "/Users/jurrejan/Documents/development/_management/codex-skills/craft-suno-songs",
+      "plist": "/Users/jurrejan/Documents/development/_management/codex-skills/craft-suno-songs/launchd/com.jurrejan.suno-feedback.plist",
+      "logs": {
+        "stdout": "~/Library/Logs/suno-feedback.log",
+        "stderr": "~/Library/Logs/suno-feedback.log"
+      }
+    },
+    {
+      "label": "com.jurrejan.agent-mail",
+      "name": "Agent Mail (MCP)",
+      "port": 8766,
+      "project": "/Users/jurrejan/Documents/development/mcp/mcp_agent_mail",
+      "plist": "/Users/jurrejan/Documents/development/mcp/mcp_agent_mail/launchd/com.jurrejan.agent-mail.plist",
+      "logs": {
+        "stdout": "~/Library/Logs/agent-mail.out.log",
+        "stderr": "~/Library/Logs/agent-mail.err.log"
+      }
+    }
+  ]
+}

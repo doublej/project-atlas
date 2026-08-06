@@ -1,0 +1,61 @@
+<svg viewBox="0 0 800 240" xmlns="http://www.w3.org/2000/svg">
+  <title>Project Atlas — Combination Mark (Horizontal)</title>
+
+  <!-- Background -->
+  <rect width="800" height="240" fill="#0A1628" rx="32"/>
+
+  <!-- Icon: Triangulation A compact -->
+  <g transform="translate(40, 20)">
+    <!-- Sight lines -->
+    <g opacity="0.2" stroke="#00D4AA" stroke-width="1">
+      <line x1="100" y1="20" x2="100" y2="180" stroke-dasharray="3 6"/>
+    </g>
+
+    <!-- The A -->
+    <g fill="#00D4AA">
+      <polygon points="100,24 52,180 76,180 100,72"/>
+      <polygon points="100,24 148,180 124,180 100,72"/>
+      <rect x="66" y="136" width="68" height="16" rx="1"/>
+    </g>
+
+    <!-- Apex marker -->
+    <circle cx="100" cy="20" r="5" fill="#FF6B35"/>
+    <circle cx="100" cy="20" r="9" fill="none" stroke="#FF6B35" stroke-width="1.5"/>
+  </g>
+
+  <!-- Wordmark: ATLAS -->
+  <!-- Using geometric letterforms, paths converted from text -->
+  <g transform="translate(260, 60)" fill="#00D4AA">
+    <!-- A -->
+    <polygon points="0,120 48,0 56,0 104,120 84,120 72,88 32,88 20,120"/>
+    <polygon points="40,72 64,72 52,36" fill="#0A1628"/>
+
+    <!-- T -->
+    <rect x="120" y="0" width="80" height="16"/>
+    <rect x="150" y="16" width="20" height="104"/>
+
+    <!-- L -->
+    <rect x="220" y="0" width="20" height="120"/>
+    <rect x="220" y="104" width="64" height="16"/>
+
+    <!-- A -->
+    <g transform="translate(300, 0)">
+      <polygon points="0,120 48,0 56,0 104,120 84,120 72,88 32,88 20,120"/>
+      <polygon points="40,72 64,72 52,36" fill="#0A1628"/>
+    </g>
+
+    <!-- S -->
+    <g transform="translate(420, 0)">
+      <rect x="8" y="0" width="64" height="16" rx="2"/>
+      <rect x="0" y="0" width="16" height="56"/>
+      <rect x="0" y="52" width="72" height="16" rx="2"/>
+      <rect x="56" y="52" width="16" height="56"/>
+      <rect x="0" y="104" width="64" height="16" rx="2"/>
+    </g>
+  </g>
+
+  <!-- Subtitle -->
+  <g fill="#00D4AA" opacity="0.4" font-family="monospace" font-size="13" letter-spacing="4">
+    <text x="260" y="210">PROJECT NAVIGATOR</text>
+  </g>
+</svg>

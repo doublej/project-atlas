@@ -1,0 +1,17 @@
+.DS_Store
+.run-logs/
+**/node_modules/
+**/target/
+**/.svelte-kit/
+**/dist/
+**/build/
+
+# CLAUDE.md tree-editor history sidecars (atlas claude-tree)
+**/*.history.jsonl
+
+# independently git-managed components (own remotes)
+/atlas-api/
+/atlas-browser/
+/atlas-cli/
+/atlas-picker/
+/atlas-watchdog/

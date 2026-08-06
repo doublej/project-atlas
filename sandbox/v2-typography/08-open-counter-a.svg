@@ -1,0 +1,30 @@
+<svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <title>Project Atlas — Open Counter A</title>
+  <!-- Background -->
+  <rect width="512" height="512" fill="#0A1628" rx="64"/>
+
+  <!-- Crosshair behind -->
+  <g stroke="#00D4AA" stroke-width="0.8" opacity="0.12">
+    <line x1="256" y1="56" x2="256" y2="456"/>
+    <line x1="56" y1="256" x2="456" y2="256"/>
+    <circle cx="256" cy="256" r="180" fill="none"/>
+  </g>
+
+  <!--
+    Open Counter A — no crossbar. The counter (triangle hole)
+    is left open, relying on the legs alone to read as "A".
+    Modern, confident, incomplete-by-design.
+  -->
+  <g fill="#00D4AA">
+    <!-- Left leg -->
+    <polygon points="256,96 136,420 182,420 256,180"/>
+    <!-- Right leg -->
+    <polygon points="256,96 376,420 330,420 256,180"/>
+  </g>
+
+  <!-- Floating dot where crossbar would be — the implied bar -->
+  <circle cx="256" cy="312" r="8" fill="#FF6B35"/>
+
+  <!-- Apex marker -->
+  <circle cx="256" cy="88" r="5" fill="#FF6B35"/>
+</svg>

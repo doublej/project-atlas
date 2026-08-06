@@ -1,0 +1,28 @@
+<svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <title>Project Atlas — Contour A</title>
+
+  <!-- Background -->
+  <rect width="512" height="512" fill="#0A1628" rx="64"/>
+
+  <!-- Topographic contour rings around the A peak -->
+  <g fill="none" stroke="#00D4AA" stroke-width="1">
+    <ellipse cx="256" cy="320" rx="200" ry="80" opacity="0.12"/>
+    <ellipse cx="256" cy="300" rx="170" ry="68" opacity="0.18"/>
+    <ellipse cx="256" cy="280" rx="140" ry="56" opacity="0.24"/>
+    <ellipse cx="256" cy="260" rx="110" ry="44" opacity="0.30"/>
+    <ellipse cx="256" cy="240" rx="80" ry="32" opacity="0.36"/>
+  </g>
+
+  <!-- The A — rising from contours like a peak -->
+  <g fill="none" stroke="#00D4AA" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Left leg -->
+    <line x1="140" y1="400" x2="256" y2="112"/>
+    <!-- Right leg -->
+    <line x1="372" y1="400" x2="256" y2="112"/>
+    <!-- Crossbar -->
+    <line x1="178" y1="310" x2="334" y2="310"/>
+  </g>
+
+  <!-- Peak marker -->
+  <circle cx="256" cy="112" r="6" fill="#FF6B35"/>
+</svg>

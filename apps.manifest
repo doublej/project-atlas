@@ -1,0 +1,9 @@
+# id|name|path|tools|install|run|os|deps
+# tools: comma-separated tool names required on PATH (e.g., bun,cargo,ray)
+# os: comma-separated values: darwin, linux (leave empty for all)
+# deps: comma-separated app ids that should start before this app
+atlas-api|Atlas API (SvelteKit)|atlas-api|bun|bun install|bun run dev|darwin,linux|
+atlas-browser|Raycast Extension (Atlas Browser)|atlas-browser|bun,ray|bun install|bun run dev|darwin|atlas-api
+atlas-picker|CLI (Rust)|atlas-picker|cargo|cargo build|cargo run|darwin,linux|atlas-api
+atlas-cli|CLI (atlas command)|atlas-cli|bun|bun install && bun link|atlas help|darwin,linux|
+atlas-watchdog|Raycast Script Command|atlas-watchdog|lsof|chmod +x run-atlas-watchdog.sh|./run-atlas-watchdog.sh|darwin|atlas-api

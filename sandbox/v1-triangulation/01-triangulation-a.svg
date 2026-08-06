@@ -1,0 +1,33 @@
+<svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <title>Project Atlas — Triangulation A</title>
+  <!-- Background -->
+  <rect width="512" height="512" fill="#0A1628" rx="64"/>
+
+  <!-- Triangulation sight lines — three converging -->
+  <g opacity="0.25" stroke="#00D4AA" stroke-width="1.5" fill="none">
+    <line x1="60" y1="440" x2="256" y2="100"/>
+    <line x1="452" y1="440" x2="256" y2="100"/>
+    <line x1="60" y1="440" x2="452" y2="440"/>
+    <!-- Grid lines suggesting coordinate system -->
+    <line x1="256" y1="60" x2="256" y2="460" stroke-dasharray="4 8"/>
+    <line x1="60" y1="300" x2="452" y2="300" stroke-dasharray="4 8"/>
+  </g>
+
+  <!-- The A — bold, geometric, constructed from the triangulation -->
+  <g fill="#00D4AA">
+    <!-- Left leg -->
+    <polygon points="256,108 148,404 188,404 256,188"/>
+    <!-- Right leg -->
+    <polygon points="256,108 364,404 324,404 256,188"/>
+    <!-- Crossbar -->
+    <rect x="182" y="310" width="148" height="32" rx="2"/>
+  </g>
+
+  <!-- Survey point marker at apex -->
+  <circle cx="256" cy="100" r="8" fill="#FF6B35"/>
+  <circle cx="256" cy="100" r="14" fill="none" stroke="#FF6B35" stroke-width="2"/>
+
+  <!-- Base survey points -->
+  <circle cx="148" cy="404" r="4" fill="#FF6B35" opacity="0.6"/>
+  <circle cx="364" cy="404" r="4" fill="#FF6B35" opacity="0.6"/>
+</svg>

@@ -1,0 +1,280 @@
+{
+  "version": 1,
+  "groups": [
+    { "id": "open", "label": "Open" },
+    { "id": "code", "label": "Code" },
+    { "id": "run", "label": "Run" },
+    { "id": "agent", "label": "Agent Files" },
+    { "id": "copy", "label": "Copy" },
+    { "id": "deploy", "label": "Deploy" },
+    { "id": "manage", "label": "Manage" },
+    { "id": "beads", "label": "Beads" }
+  ],
+  "actions": [
+    {
+      "id": "open-iterm",
+      "label": "Open in iTerm",
+      "group": "open",
+      "icon": "terminal",
+      "shortcut": "cmd+t",
+      "type": "api",
+      "api": { "method": "POST", "endpoint": "/api/iterm" }
+    },
+    {
+      "id": "open-finder",
+      "label": "Open in Finder",
+      "group": "open",
+      "icon": "folder",
+      "shortcut": "cmd+f",
+      "type": "api",
+      "api": { "method": "POST", "endpoint": "/api/finder" }
+    },
+    {
+      "id": "open-default",
+      "label": "Open",
+      "group": "open",
+      "icon": "app",
+      "shortcut": "cmd+o",
+      "type": "open-path"
+    },
+    {
+      "id": "open-claude-code",
+      "label": "Open in Claude Code",
+      "group": "code",
+      "icon": "stars",
+      "type": "iterm-command",
+      "command": "claude --dangerously-skip-permissions"
+    },
+    {
+      "id": "open-claude-resume",
+      "label": "Resume Claude Session",
+      "group": "code",
+      "icon": "stars",
+      "type": "iterm-command",
+      "condition": ["claudeSessions"],
+      "command": "claude --continue"
+    },
+    {
+      "id": "open-codex",
+      "label": "Open in Codex",
+      "group": "code",
+      "icon": "wand",
+      "shortcut": "cmd+shift+x",
+      "type": "iterm-command",
+      "command": "codex --full-auto"
+    },
+    {
+      "id": "open-opencode",
+      "label": "Open in Opencode",
+      "group": "code",
+      "icon": "terminal",
+      "type": "iterm-command",
+      "command": "opencode"
+    },
+    {
+      "id": "run-dev",
+      "label": "Run Dev Server",
+      "group": "run",
+      "icon": "play",
+      "shortcut": "cmd+r",
+      "type": "api",
+      "condition": ["devCommand", "runner"],
+      "api": { "method": "POST", "endpoint": "/api/run" }
+    },
+    {
+      "id": "run-script",
+      "label": "Run {{name}}",
+      "group": "run",
+      "icon": "play",
+      "type": "api",
+      "dynamic": "scripts",
+      "condition": ["scripts"],
+      "api": { "method": "POST", "endpoint": "/api/run" }
+    },
+    {
+      "id": "run-just",
+      "label": "just {{name}}",
+      "group": "run",
+      "icon": "play",
+      "type": "api",
+      "dynamic": "justRecipes",
+      "condition": ["hasJustfile", "justRecipes"],
+      "api": { "method": "POST", "endpoint": "/api/run" }
+    },
+    {
+      "id": "stop-dev",
+      "label": "Stop Dev Server",
+      "group": "run",
+      "icon": "stop",
+      "type": "api",
+      "api": { "method": "DELETE", "endpoint": "/api/run" }
+    },
+    {
+      "id": "agent-create-claude",
+      "label": "Create CLAUDE.md",
+      "group": "agent",
+      "icon": "plus",
+      "shortcut": "cmd+1",
+      "type": "api",
+      "api": { "method": "POST", "endpoint": "/api/agent-files" }
+    },
+    {
+      "id": "agent-create-agents",
+      "label": "Create AGENTS.md",
+      "group": "agent",
+      "icon": "plus",
+      "shortcut": "cmd+2",
+      "type": "api",
+      "api": { "method": "POST", "endpoint": "/api/agent-files" }
+    },
+    {
+      "id": "agent-copy-claude-to-agents",
+      "label": "Copy CLAUDE.md to AGENTS.md",
+      "group": "agent",
+      "icon": "arrow-right",
+      "type": "api",
+      "api": { "method": "PUT", "endpoint": "/api/agent-files" }
+    },
+    {
+      "id": "agent-copy-agents-to-claude",
+      "label": "Copy AGENTS.md to CLAUDE.md",
+      "group": "agent",
+      "icon": "arrow-right",
+      "type": "api",
+      "api": { "method": "PUT", "endpoint": "/api/agent-files" }
+    },
+    {
+      "id": "agent-log-view",
+      "label": "View Agent Journal",
+      "group": "agent",
+      "icon": "terminal",
+      "type": "iterm-command",
+      "command": "atlas agent-log recent"
+    },
+    {
+      "id": "claude-tree-view",
+      "label": "View CLAUDE.md Tree",
+      "group": "agent",
+      "icon": "tree",
+      "type": "open-url",
+      "value": "/claude-tree?root={{project.path}}"
+    },
+    {
+      "id": "copy-path",
+      "label": "Copy Path",
+      "group": "copy",
+      "icon": "clipboard",
+      "shortcut": "cmd+shift+c",
+      "type": "clipboard",
+      "value": "{{project.path}}"
+    },
+    {
+      "id": "copy-dev-command",
+      "label": "Copy Dev Command",
+      "group": "copy",
+      "icon": "clipboard",
+      "shortcut": "cmd+shift+d",
+      "type": "clipboard",
+      "condition": ["devCommand"],
+      "value": "cd {{project.path}} && {{devCommand}}"
+    },
+    {
+      "id": "copy-claude-rules",
+      "label": "Copy CLAUDE.md",
+      "group": "copy",
+      "icon": "clipboard",
+      "type": "clipboard"
+    },
+    {
+      "id": "copy-env",
+      "label": "Copy .env",
+      "group": "copy",
+      "icon": "clipboard",
+      "type": "clipboard"
+    },
+    {
+      "id": "deploy-open",
+      "label": "Open {{name}}",
+      "group": "deploy",
+      "icon": "globe",
+      "type": "open-url",
+      "dynamic": "deploy",
+      "condition": ["deploy"]
+    },
+    {
+      "id": "domain-open",
+      "label": "Open {{name}}",
+      "group": "deploy",
+      "icon": "globe",
+      "type": "open-url",
+      "dynamic": "domains",
+      "condition": ["domains"]
+    },
+    {
+      "id": "umami-open",
+      "label": "Umami · {{name}}",
+      "group": "deploy",
+      "icon": "chart",
+      "type": "open-url",
+      "dynamic": "umami",
+      "condition": ["umami"]
+    },
+    {
+      "id": "rename",
+      "label": "Rename",
+      "group": "manage",
+      "icon": "pencil",
+      "type": "api",
+      "consumers": ["svelte"],
+      "api": { "method": "POST", "endpoint": "/api/rename" }
+    },
+    {
+      "id": "move",
+      "label": "Move",
+      "group": "manage",
+      "icon": "folder",
+      "type": "api",
+      "consumers": ["svelte"],
+      "api": { "method": "POST", "endpoint": "/api/move" }
+    },
+    {
+      "id": "edit-description",
+      "label": "Edit Description",
+      "group": "manage",
+      "icon": "pencil",
+      "type": "inline-edit",
+      "consumers": ["svelte"],
+      "api": { "method": "PUT", "endpoint": "/api/description" }
+    },
+    {
+      "id": "refresh",
+      "label": "Refresh",
+      "group": "manage",
+      "icon": "refresh",
+      "shortcut": "cmd+shift+r",
+      "type": "api",
+      "api": { "method": "POST", "endpoint": "/api/refresh" }
+    },
+    {
+      "id": "beads-create",
+      "label": "Create Beads Ticket",
+      "group": "beads",
+      "icon": "plus",
+      "shortcut": "cmd+shift+t",
+      "type": "form",
+      "consumers": ["raycast"],
+      "api": { "method": "POST", "endpoint": "/api/beads" }
+    },
+    {
+      "id": "beads-view",
+      "label": "View Beads Tickets",
+      "group": "beads",
+      "icon": "ticket",
+      "shortcut": "cmd+b",
+      "type": "iterm-command",
+      "condition": ["beads"],
+      "consumers": ["raycast"],
+      "command": "bd ready"
+    }
+  ]
+}

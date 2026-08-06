@@ -1,0 +1,21 @@
+<svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <title>Project Atlas — Brutalist A</title>
+  <!-- Background -->
+  <rect width="512" height="512" fill="#0A1628" rx="0"/>
+
+  <!--
+    Brutalist A — no rounded corners on background, raw geometry,
+    heavy weight, asymmetric crossbar. Concrete.
+  -->
+  <g fill="#00D4AA">
+    <!-- Left leg — extra heavy -->
+    <polygon points="256,80 108,432 176,432 256,156"/>
+    <!-- Right leg — slightly thinner for tension -->
+    <polygon points="256,80 404,432 356,432 256,156"/>
+    <!-- Crossbar — shifted left, asymmetric -->
+    <rect x="148" y="292" width="200" height="40"/>
+  </g>
+
+  <!-- Raw apex — square, not circle -->
+  <rect x="240" y="60" width="32" height="32" fill="#FF6B35"/>
+</svg>
