@@ -71,16 +71,6 @@
       }
     },
     {
-      "label": "com.jurrejan.aw-backup",
-      "name": "ActivityWatch NAS Backup",
-      "project": "/Users/jurrejan/.local/bin",
-      "plist": "/Users/jurrejan/Library/LaunchAgents/com.jurrejan.aw-backup.plist",
-      "logs": {
-        "stdout": "~/Library/Logs/aw-nas-backup/backup.log",
-        "stderr": "~/Library/Logs/aw-nas-backup/backup.log"
-      }
-    },
-    {
       "label": "com.activitywatch.watchdog",
       "name": "ActivityWatch Watchdog",
       "project": "/Users/jurrejan/Library/Scripts",
@@ -162,6 +152,17 @@
       "logs": {
         "stdout": "(none)",
         "stderr": "(none)"
+      }
+    },
+    {
+      "label": "com.jurrejan.aw-backup",
+      "name": "ActivityWatch monthly backup",
+      "project": "/Users/jurrejan/Documents/development/python/aw-watcher-agents",
+      "plist": "/Users/jurrejan/Documents/development/python/aw-watcher-agents/launchd/com.jurrejan.aw-backup.plist",
+      "note": "1st of the month 04:30: VACUUM INTO snapshot of the AW sqlite.db, gzipped to _data/aw-backups, last 12 kept.",
+      "logs": {
+        "stdout": "/Users/jurrejan/Library/Logs/aw-backup.log",
+        "stderr": "/Users/jurrejan/Library/Logs/aw-backup.log"
       }
     }
   ]
