@@ -152,6 +152,16 @@
         "stdout": "~/Library/Logs/agent-mail.out.log",
         "stderr": "~/Library/Logs/agent-mail.err.log"
       }
+    },
+    {
+      "label": "com.jurrejan.aw-watcher-agents",
+      "name": "AW Watcher Agents",
+      "project": "/Users/jurrejan/Documents/development/python/aw-watcher-agents",
+      "plist": "/Users/jurrejan/Documents/development/python/aw-watcher-agents/launchd/com.jurrejan.aw-watcher-agents.plist",
+      "logs": {
+        "stdout": "~/Library/Logs/aw-watcher-agents.log",
+        "stderr": "~/Library/Logs/aw-watcher-agents.log"
+      }
     }
   ]
 }
