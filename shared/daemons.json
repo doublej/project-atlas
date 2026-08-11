@@ -154,13 +154,14 @@
       }
     },
     {
-      "label": "com.jurrejan.aw-watcher-agents",
-      "name": "AW Watcher Agents",
+      "label": "com.jurrejan.gui-path",
+      "name": "GUI PATH (for aw-qt module discovery)",
       "project": "/Users/jurrejan/Documents/development/python/aw-watcher-agents",
-      "plist": "/Users/jurrejan/Documents/development/python/aw-watcher-agents/launchd/com.jurrejan.aw-watcher-agents.plist",
+      "plist": "/Users/jurrejan/Documents/development/python/aw-watcher-agents/launchd/com.jurrejan.gui-path.plist",
+      "note": "RunAtLoad one-shot: launchctl setenv PATH. Lets aw-qt find ~/.local/bin/aw-watcher-agents. aw-watcher-agents itself is started by aw-qt, not launchd.",
       "logs": {
-        "stdout": "~/Library/Logs/aw-watcher-agents.log",
-        "stderr": "~/Library/Logs/aw-watcher-agents.log"
+        "stdout": "(none)",
+        "stderr": "(none)"
       }
     }
   ]
