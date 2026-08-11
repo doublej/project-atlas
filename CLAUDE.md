@@ -28,7 +28,7 @@ Canonical names — use these exact terms across all three consumers; they are t
 | **atlas-api** | `atlas-api/` | SvelteKit 2, Svelte 5, Bun | Backend API on port 47891 — scans `~/Documents/development`, caches results, serves project metadata |
 | **atlas-browser** | `atlas-browser/` | Raycast extension, React, TS | Raycast UI for browsing/filtering/acting on projects |
 | **atlas-picker** | `atlas-picker/` | Rust, iocraft, Nucleo | TUI fuzzy picker that reads from the API cache file directly |
-| **atlas-cli** | `atlas-cli/` | Bun, TS | Global **`atlas`** command — thin client to the API (`tree`/`init`/`new`/`scan`/`open`/`pick`/`ports`/`agent-log`/`prime`). Replaces per-project justfile recipes; `atlas new` is the scaffolding front door. `atlas prime` briefs a session (wired as a global SessionStart hook; `atlas agent-log session-end` as SessionEnd) |
+| **atlas-cli** | `atlas-cli/` | Bun, TS | Global **`atlas`** command — thin client to the API (`tree`/`init`/`new`/`scan`/`open`/`jump`/`pick`/`ports`/`agent-log`/`prime`). Replaces per-project justfile recipes; `atlas new` is the scaffolding front door. `atlas prime` briefs a session (wired as a global SessionStart hook; `atlas agent-log session-end` as SessionEnd) |
 | **atlas-watchdog** | `atlas-watchdog/` | Bash (Raycast script cmd) | Inline status monitor — polls port 47891, auto-restarts via `launchctl kickstart com.jurrejan.atlas-api` |
 | **atlas-browser Daemons** | `atlas-browser/src/daemons.tsx` | Raycast command | View/restart launchd daemons via the `/api/daemons` endpoints; reads `shared/daemons.json` |
 
@@ -87,12 +87,17 @@ cd atlas-cli
 bun install          # deps
 bun link             # install the `atlas` bin onto PATH (~/.bun/bin)
 bunx tsc --noEmit    # typecheck
-atlas help           # list commands (tree/init/new/scan/open/run/pick)
+atlas help           # list commands (tree/init/new/scan/open/run/jump/pick)
 ```
 
 `atlas tree` (no subcommand) prints tree help; `atlas tree view|search|compose` work in the
-terminal, and `atlas tree web [path]` opens `/claude-tree?root=…` — the cookiecutter `claude-tree`
+terminal (`view --up` = the chain towards the root only), and `atlas tree web [path]` opens
+`/claude-tree?root=…` — the cookiecutter `claude-tree`
 recipe is a thin `atlas tree web` alias. `atlas init` replaces the old `atlas-init` zsh function.
+`atlas jump <query>` (aliased `pj`) cds the shell to the best match — no query opens the fuzzy
+picker, and `--run <cmd>` runs a command there (`pj atlas --run bun test`); `atlas <query> --run
+<cmd>` is the same thing. It needs `shell/atlas.zsh` sourced — that wrapper evals what the CLI
+writes to `$ATLAS_SHELL_FILE`, since a child process can't cd its parent shell.
 `atlas new` scaffolds a project — pick category → cookiecutter template → it appears in atlas
 instantly (forces a rescan). Replaces the standalone `_management/cookiecutter-picker`.
 
