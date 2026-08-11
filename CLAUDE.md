@@ -88,6 +88,7 @@ bun install          # deps
 bun link             # install the `atlas` bin onto PATH (~/.bun/bin)
 bunx tsc --noEmit    # typecheck
 atlas help           # list commands (tree/init/new/scan/open/run/jump/pick)
+atlas install-autocompletion   # zsh completion for `atlas` + `pj` (rerun after adding a command)
 ```
 
 `atlas tree` (no subcommand) prints tree help; `atlas tree view|search|compose` work in the
