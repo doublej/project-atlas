@@ -164,6 +164,16 @@
         "stdout": "/Users/jurrejan/Library/Logs/aw-backup.log",
         "stderr": "/Users/jurrejan/Library/Logs/aw-backup.log"
       }
+    },
+    {
+      "label": "com.hyndsyght.daemon",
+      "name": "hyndsyght",
+      "project": "/Users/jurrejan/Documents/development/python/hyndsyght",
+      "plist": "/Users/jurrejan/Documents/development/python/hyndsyght/launchd/com.hyndsyght.daemon.plist",
+      "logs": {
+        "stdout": "~/Library/Logs/hyndsyght/daemon.out.log",
+        "stderr": "~/Library/Logs/hyndsyght/daemon.err.log"
+      }
     }
   ]
 }
