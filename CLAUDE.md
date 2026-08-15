@@ -29,7 +29,7 @@ Canonical names — use these exact terms across all three consumers; they are t
 | **atlas-browser** | `atlas-browser/` | Raycast extension, React, TS | Raycast UI for browsing/filtering/acting on projects |
 | **atlas-picker** | `atlas-picker/` | Rust, iocraft, Nucleo | TUI fuzzy picker that reads from the API cache file directly |
 | **atlas-cli** | `atlas-cli/` | Bun, TS | Global **`atlas`** command — thin client to the API (`tree`/`init`/`new`/`scan`/`open`/`jump`/`pick`/`ports`/`agent-log`/`prime`). Replaces per-project justfile recipes; `atlas new` is the scaffolding front door. `atlas prime` briefs a session (wired as a global SessionStart hook; `atlas agent-log session-end` as SessionEnd) |
-| **atlas-watchdog** | `atlas-watchdog/` | Bash (Raycast script cmd) | Inline status monitor — polls port 47891, auto-restarts via `launchctl kickstart com.jurrejan.atlas-api` |
+| **atlas-watchdog** | `atlas-watchdog/` | Bash (Raycast script cmd) | Inline status monitor — polls `/api/health`, restarts via `launchctl kickstart com.jurrejan.atlas-api` (never `-k`) |
 | **atlas-browser Daemons** | `atlas-browser/src/daemons.tsx` | Raycast command | View/restart launchd daemons via the `/api/daemons` endpoints; reads `shared/daemons.json` |
 
 Each component has its own `CLAUDE.md` with detailed architecture notes.
@@ -181,4 +181,6 @@ Plists are edited by humans only. atlas-api never writes plists in v1.
 - **Bun** is the package manager for both TS projects
 - **Rust builds** always go through `just reinstall` (lint + fmt-check + install)
 - atlas-picker renders to `/dev/tty` to keep stdout free for shell integration (`pj` shell function)
-- atlas-watchdog uses `launchctl kickstart -k gui/$(id -u)/com.jurrejan.atlas-api` for restarts
+- **The atlas-api daemon serves the adapter-node build (`bun build/index.js`), never `vite dev`** — a dev server needs ~70s before its first response and gets killed mid-boot by health checks. Rebuild with `bun run daemon:reload` after changing API code. See [`atlas-api/CLAUDE.md`](atlas-api/CLAUDE.md#the-daemon-serves-the-build-not-vite-dev)
+- **Liveness is `GET /api/health`, never `/`** — the root page is the heaviest route and a UI 500 must not read as "API dead"
+- **Pollers use `launchctl kickstart` without `-k`** — `-k` SIGKILLs a live-but-slow job; plain `kickstart` no-ops on a running one, and `KeepAlive` handles real crashes. `-k` is only for deliberate restarts (`daemon:reload`)
