@@ -16,6 +16,7 @@ Canonical names — use these exact terms across all three consumers; they are t
 - **Scanner** — the atlas-api module (`scanner.ts`) that walks `~/Documents/development` and produces a ProjectAtlas. The source of truth for the Project shape.
 - **cache** — `.atlas-cache.json`, the persisted ProjectAtlas (60s TTL, stale-while-revalidate). atlas-picker reads it directly.
 - **Framework / Runner / GitStatus / DeployInfo** — the typed enums/structs on a Project. Names must match byte-for-byte across consumers (see `.claude/rules/shared-types.md`).
+- **flow** — a project's branch flow: `feature/*` → **integration** (`develop`) → **trunk** (`main`) → an annotated tag + GitHub release. No release branches. `Project.flow` carries the policy (`gitflow` opted in · `trunk` ours, not opted in yet · `external` someone else's repo · `local` no remote), the trunk and integration branch names, the owner of the **main repository** (origin), and a `drift` line when the current branch breaks the flow. Detected per repo; `.atlas` `flow` overrides it.
 - **action registry** — `shared/actions.json`: what project actions exist and when. Not "commands", not "buttons".
 - **daemon registry** — `shared/daemons.json`: the launchd daemons atlas displays/manages.
 - **consumer** — one of the three UIs reading the shared shapes: atlas-api, atlas-browser, atlas-picker.
@@ -28,7 +29,7 @@ Canonical names — use these exact terms across all three consumers; they are t
 | **atlas-api** | `atlas-api/` | SvelteKit 2, Svelte 5, Bun | Backend API on port 47891 — scans `~/Documents/development`, caches results, serves project metadata |
 | **atlas-browser** | `atlas-browser/` | Raycast extension, React, TS | Raycast UI for browsing/filtering/acting on projects |
 | **atlas-picker** | `atlas-picker/` | Rust, iocraft, Nucleo | TUI fuzzy picker that reads from the API cache file directly |
-| **atlas-cli** | `atlas-cli/` | Bun, TS | Global **`atlas`** command — thin client to the API (`tree`/`init`/`new`/`scan`/`open`/`jump`/`pick`/`ports`/`agent-log`/`prime`). Replaces per-project justfile recipes; `atlas new` is the scaffolding front door. `atlas prime` briefs a session (wired as a global SessionStart hook; `atlas agent-log session-end` as SessionEnd) |
+| **atlas-cli** | `atlas-cli/` | Bun, TS | Global **`atlas`** command — thin client to the API (`tree`/`init`/`new`/`scan`/`open`/`jump`/`pick`/`ports`/`flow`/`agent-log`/`prime`). Replaces per-project justfile recipes; `atlas new` is the scaffolding front door. `atlas prime` briefs a session (wired as a global SessionStart hook; `atlas agent-log session-end` as SessionEnd) |
 | **atlas-watchdog** | `atlas-watchdog/` | Bash (Raycast script cmd) | Inline status monitor — polls `/api/health`, restarts via `launchctl kickstart com.jurrejan.atlas-api` (never `-k`) |
 | **atlas-browser Daemons** | `atlas-browser/src/daemons.tsx` | Raycast command | View/restart launchd daemons via the `/api/daemons` endpoints; reads `shared/daemons.json` |
 
@@ -100,7 +101,12 @@ picker, and `--run <cmd>` runs a command there (`pj atlas --run bun test`); `atl
 <cmd>` is the same thing. It needs `shell/atlas.zsh` sourced — that wrapper evals what the CLI
 writes to `$ATLAS_SHELL_FILE`, since a child process can't cd its parent shell.
 `atlas new` scaffolds a project — pick category → cookiecutter template → it appears in atlas
-instantly (forces a rescan). Replaces the standalone `_management/cookiecutter-picker`.
+instantly (forces a rescan). Replaces the standalone `_management/cookiecutter-picker`. New
+projects are born on the flow: `git init -b main`, a scaffold commit, and a `develop` branch.
+`atlas flow` shows the current project's branch flow, `atlas flow audit` lists which repos can
+safely move onto it (clean tree, on trunk, our remote) and which can't and why, and `atlas flow
+init [path]` opts one repo in — creates `develop`, renames `master` → `main`, writes the `.atlas`
+`flow` block. Nothing is migrated in bulk; `--dry-run` prints the git commands first.
 
 ## Architecture
 
