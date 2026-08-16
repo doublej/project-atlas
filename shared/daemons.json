@@ -174,6 +174,41 @@
         "stdout": "~/Library/Logs/hyndsyght/daemon.out.log",
         "stderr": "~/Library/Logs/hyndsyght/daemon.err.log"
       }
+    },
+    {
+      "label": "com.doublej.consultusermcp.devid-watch",
+      "name": "Developer ID Cert Watch",
+      "project": "/Users/jurrejan/Documents/development/mcp/consult-user-mcp",
+      "plist": "/Users/jurrejan/Documents/development/mcp/consult-user-mcp/launchd/com.doublej.consultusermcp.devid-watch.plist",
+      "logs": {
+        "stdout": "/tmp/devid-watch.log",
+        "stderr": "/tmp/devid-watch.log"
+      },
+      "selfManaged": false,
+      "notes": "Temporary. Polls every 15 min for the Developer ID Application signing identity; unloads itself once found."
+    },
+    {
+      "label": "com.binwatch.tunnel",
+      "name": "binwatch tunnel",
+      "port": 8842,
+      "project": "/Users/jurrejan/Documents/development/python/binwatch",
+      "plist": "/Users/jurrejan/Documents/development/python/binwatch/launchd/com.binwatch.tunnel.plist",
+      "logs": {
+        "stdout": "/tmp/binwatch-tunnel.log",
+        "stderr": "/tmp/binwatch-tunnel.log"
+      },
+      "notes": "SSH tunnel to the binwatch viewer on ubuntu-server (loopback only, unauthenticated behind it)"
+    },
+    {
+      "label": "com.binwatch.popup",
+      "name": "binwatch popup",
+      "project": "/Users/jurrejan/Documents/development/python/binwatch",
+      "plist": "/Users/jurrejan/Documents/development/python/binwatch/launchd/com.binwatch.popup.plist",
+      "logs": {
+        "stdout": "/tmp/binwatch-popup.log",
+        "stderr": "/tmp/binwatch-popup.log"
+      },
+      "notes": "Opens an always-on-top live view when someone is at the waste containers. LaunchAgent, not a daemon: it needs the login session to draw a window."
     }
   ]
 }
