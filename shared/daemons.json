@@ -104,7 +104,7 @@
       "label": "com.jj.poolsuite-watch",
       "name": "Poolsuite Mail Watcher",
       "project": "/Users/jurrejan/Documents/development/_life",
-      "plist": "/Users/jurrejan/Documents/development/_life/.automation/com.jj.poolsuite-watch.plist",
+      "plist": "/Users/jurrejan/Documents/development/_life/system/automation/com.jj.poolsuite-watch.plist",
       "logs": {
         "stdout": "/Users/jurrejan/Documents/development/_life/.logs/poolsuite_watch.out.log",
         "stderr": "/Users/jurrejan/Documents/development/_life/.logs/poolsuite_watch.err.log"
@@ -209,6 +209,17 @@
         "stderr": "/tmp/binwatch-popup.log"
       },
       "notes": "Opens an always-on-top live view when someone is at the waste containers. LaunchAgent, not a daemon: it needs the login session to draw a window."
+    },
+    {
+      "label": "com.jurrejan.dock-unfreeze",
+      "name": "Dock Unfreeze",
+      "project": "/Users/jurrejan/Documents/development/python/dock-unfreeze",
+      "plist": "/Users/jurrejan/Documents/development/python/dock-unfreeze/launchd/com.jurrejan.dock-unfreeze.plist",
+      "logs": {
+        "stdout": "~/Library/Logs/dock-unfreeze/stdout.log",
+        "stderr": "~/Library/Logs/dock-unfreeze/stderr.log"
+      },
+      "notes": "LaunchAgent, not a daemon: it listens for com.apple.screenIsUnlocked, restarts a frozen Dock, and shows a training dialog. \"It's still frozen\" opens a Claude Code session on the captured incident."
     }
   ]
 }
