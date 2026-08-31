@@ -219,7 +219,23 @@
         "stdout": "~/Library/Logs/dock-unfreeze/stdout.log",
         "stderr": "~/Library/Logs/dock-unfreeze/stderr.log"
       },
-      "notes": "LaunchAgent, not a daemon: it listens for com.apple.screenIsUnlocked, restarts a frozen Dock, and shows a training dialog. \"It's still frozen\" opens a Claude Code session on the captured incident."
+      "notes": "LaunchAgent, not a daemon: it listens for com.apple.screenIsUnlocked, restarts a frozen Dock, and shows a training dialog. \"It's still frozen\" opens a Claude Code session on the captured incident. Unloaded 2026-08-28 (netmount hang fixed); re-enable with `just install-agent`."
+    },
+    {
+      "label": "bud-fix-worker.service",
+      "name": "group-chat-bud /fix worker",
+      "host": "ubuntu-server",
+      "project": "/Users/jurrejan/Documents/development/node/group-chat-bud",
+      "unit": "/Users/jurrejan/Documents/development/node/group-chat-bud/scripts/fix-worker.service",
+      "notes": "systemd on ubuntu-server, not launchd. Installed at /etc/systemd/system/bud-fix-worker.service, running from /home/jurrejan/development/group-chat-bud. Drains the /fix queue the container writes to the shared bind mount. Logs: journalctl -u bud-fix-worker."
+    },
+    {
+      "label": "bud-backup.timer",
+      "name": "group-chat-bud nightly backup",
+      "host": "ubuntu-server",
+      "project": "/Users/jurrejan/Documents/development/node/group-chat-bud",
+      "unit": "/Users/jurrejan/Documents/development/node/group-chat-bud/scripts/backup.timer",
+      "notes": "systemd timer on ubuntu-server, not launchd. Fires bud-backup.service (scripts/backup.service) at 04:15 daily: VACUUM INTO snapshot, tar of bud-data + bud-claude to ~/backups/group-chat-bud, 14-day prune, rsync to the NAS. Restore procedure: DEPLOY.md."
     }
   ]
 }
