@@ -48,7 +48,8 @@
       "logs": {
         "stdout": "/Users/jurrejan/Documents/development/python/parakeet-server/logs/parakeet.out.log",
         "stderr": "/Users/jurrejan/Documents/development/python/parakeet-server/logs/parakeet.err.log"
-      }
+      },
+      "disabled": "2026-09-03: launchctl disable \u2014 7.7 GB resident on 16 GB Mac; re-enable with launchctl enable gui/501/com.jurrejan.parakeet + bootstrap"
     },
     {
       "label": "com.jurrejan.macos-data-keeper",
@@ -236,6 +237,26 @@
       "project": "/Users/jurrejan/Documents/development/node/group-chat-bud",
       "unit": "/Users/jurrejan/Documents/development/node/group-chat-bud/scripts/backup.timer",
       "notes": "systemd timer on ubuntu-server, not launchd. Fires bud-backup.service (scripts/backup.service) at 04:15 daily: VACUUM INTO snapshot, tar of bud-data + bud-claude to ~/backups/group-chat-bud, 14-day prune, rsync to the NAS. Restore procedure: DEPLOY.md."
+    },
+    {
+      "label": "com.jurrejan.telegram-morning",
+      "name": "Telegram Morning Timer",
+      "project": "/Users/jurrejan/tools/telegram-morning",
+      "plist": "/Users/jurrejan/tools/telegram-morning/com.jurrejan.telegram-morning.plist",
+      "logs": {
+        "stdout": "~/Library/Logs/telegram-morning.log",
+        "stderr": "~/Library/Logs/telegram-morning.log"
+      }
+    },
+    {
+      "label": "com.jurrejan.memwatch",
+      "name": "Memory Watchdog",
+      "project": "/Users/jurrejan/Documents/development/_management/memory",
+      "plist": "/Users/jurrejan/Documents/development/_management/memory/launchd/com.jurrejan.memwatch.plist",
+      "logs": {
+        "stdout": "~/Library/Logs/memwatch/launchd.out.log",
+        "stderr": "~/Library/Logs/memwatch/launchd.err.log"
+      }
     }
   ]
 }
