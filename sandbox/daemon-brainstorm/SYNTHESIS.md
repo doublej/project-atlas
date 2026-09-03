@@ -79,7 +79,7 @@ On the bigger "is atlas the right home" question: the devil's alternatives (a Ra
       "label": "com.jurrejan.atlas-api",
       "name": "Atlas API",
       "port": 47891,
-      "project": "/Users/jurrejan/Documents/development/multi-stack/project-atlas/atlas-api",
+      "project": "/Users/jurrejan/dev/multi-stack/project-atlas/atlas-api",
       "logs": { "stdout": "/tmp/atlas-api.log", "stderr": "/tmp/atlas-api.error.log" },
       "selfManaged": true
     },
@@ -92,7 +92,7 @@ On the bigger "is atlas the right home" question: the devil's alternatives (a Ra
     {
       "label": "com.jurrejan.dlwatcher",
       "name": "Download Watcher",
-      "project": "/Users/jurrejan/Documents/development/dl-watcher",
+      "project": "/Users/jurrejan/dev/dl-watcher",
       "logs": { "stderr": "~/Library/Logs/dl-watcher.stderr.log" }
     },
     {

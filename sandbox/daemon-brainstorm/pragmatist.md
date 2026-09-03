@@ -40,13 +40,13 @@ A flat `shared/daemons.json` registry that mirrors the proven `shared/actions.js
       "label": "com.jurrejan.atlas-api",
       "name": "Atlas API",
       "port": 47891,
-      "project": "/Users/jurrejan/Documents/development/multi-stack/project-atlas/atlas-api",
+      "project": "/Users/jurrejan/dev/multi-stack/project-atlas/atlas-api",
       "logs": { "stdout": "/tmp/atlas-api.log", "stderr": "/tmp/atlas-api.error.log" }
     },
     {
       "label": "com.jurrejan.beads-bridge",
       "name": "Beads Bridge",
-      "project": "/Users/jurrejan/Documents/development/..."
+      "project": "/Users/jurrejan/dev/..."
     }
   ]
 }

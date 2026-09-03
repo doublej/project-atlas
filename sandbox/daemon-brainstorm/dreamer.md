@@ -22,7 +22,7 @@ Atlas becomes the single mission-control surface for everything running on JJ's 
 **Unlocks**: atlas-watchdog (currently a 23-line bash polling `lsof`) generalizes to a single subscriber on the SSE stream that fires `launchctl kickstart -k` for any daemon in `failed` state. One watchdog, N daemons — open question #4 answered. Replay last hour of events for crash forensics.
 
 ### 4. Self-healing supervisor with memory-trend prediction
-**What**: atlas-api samples RSS/CPU per managed daemon every 15s (via `ps` or `proc_pidinfo`), stores 24h rolling window in SQLite at `~/Documents/development/.atlas-cache.db`, fits a simple linear trend. When predicted RSS will exceed `memory_limit` within 30 min, atlas pre-emptively `launchctl kickstart`s during an idle window.
+**What**: atlas-api samples RSS/CPU per managed daemon every 15s (via `ps` or `proc_pidinfo`), stores 24h rolling window in SQLite at `~/dev/.atlas-cache.db`, fits a simple linear trend. When predicted RSS will exceed `memory_limit` within 30 min, atlas pre-emptively `launchctl kickstart`s during an idle window.
 **Why it's exciting**: Goes beyond launchd's reactive `KeepAlive`. Catches the slow blender-mcp leak before it OOMs your work. Trend graphs are a free side effect of the sampling.
 **Unlocks**: Per-daemon health score (0–100) surfaced in the Raycast browser. Anomaly detection: "wallgen RSS is 3x its 7-day median" → notify via consult-user-mcp. Beads tickets auto-filed with the trend graph attached.
 

@@ -9,11 +9,18 @@ Multi-component workspace for indexing and navigating development projects. A Sv
 <vocabulary>
 Canonical names — use these exact terms across all three consumers; they are this project's ubiquitous language.
 
-- **Project** — one scanned development folder. The core record (`name`, `path`, `type`, `framework`, `runner`, `git`, `scripts`, `deploy`, `beads`, `domains`, `umami`, …).
+- **Project** — one scanned development folder. The core record (`name`, `slug`, `path`, `type`, `framework`, `runner`, `git`, `scripts`, `deploy`, `beads`, `domains`, `umami`, …).
+- **slug** — kebab-case DNS label derived from a project's folder name (`.atlas` `slug` overrides it). Used to build its dev hostnames.
+- **dev hostname** — a project's stable `<slug>.dev.local.jurrejan.com` (LAN) / `<slug>.dev.remote.jurrejan.com` (password-gated, WAN) address, brokered by the local Caddy instance atlas manages via `atlas-api/src/lib/caddyDev.ts`. Registered on first `POST /api/run`, listed at `GET /api/hostnames`.
+- **host** — one catalogued machine, identified by a `shared/hosts.json` id: `m2` (this Mac, the **primary**), `fractal` (Windows **satellite**, `C:/dev`), `ubuntu` (**deploy** target, `/home/jurrejan/development`). Every `Project` carries `host`. Not to be confused with `<slug>.dev.remote…`, which is the WAN half of a dev hostname *on this same Mac* — `host` is the machine axis, `remote` is the reachability axis.
+- **isLocal** — present (and `true`) only on the primary host's projects. Its *absence* is what hides every action that touches a filesystem or a GUI, and `/api/*` write routes reject a non-local path with 400 regardless.
+- **alsoOn** — the same project catalogued on another machine, derived at merge time by exact name match. Skipped when the name is ambiguous on the primary, so a link is never a guess.
+- **host registry** — `shared/hosts.json`: the machines atlas catalogs, their roots and SSH aliases. The third registry, alongside actions and daemons.
+- **scan agent** — a bundled copy of the scanner (`bun run agent:build`) shipped to each remote host by `atlas hosts sync` and run over SSH. Its `--json` mode prints a `ProjectAtlas` on stdout and writes nothing.
 - **domains** — the production domains a project publishes on, detected from its own files (CNAME, vercel/wrangler config, `package.json` homepage, `og:url`, robots.txt, env). Never fetched from a provider.
 - **umami** — the Umami analytics link: `websiteIds` found in the project's tracking snippets plus the `instance` base URL. Dashboard URL is `{instance}/websites/{websiteId}`.
 - **ProjectAtlas** — the full scan result: projects + folders + detected frameworks. The `/api/projects` payload shape.
-- **Scanner** — the atlas-api module (`scanner.ts`) that walks `~/Documents/development` and produces a ProjectAtlas. The source of truth for the Project shape.
+- **Scanner** — the atlas-api module (`scanner.ts`) that walks `~/dev` and produces a ProjectAtlas. The source of truth for the Project shape.
 - **cache** — `.atlas-cache.json`, the persisted ProjectAtlas (60s TTL, stale-while-revalidate). atlas-picker reads it directly.
 - **Framework / Runner / GitStatus / DeployInfo** — the typed enums/structs on a Project. Names must match byte-for-byte across consumers (see `.claude/rules/shared-types.md`).
 - **flow** — a project's branch flow: `feature/*` → **integration** (`develop`) → **trunk** (`main`) → an annotated tag + GitHub release. No release branches. `Project.flow` carries the policy (`gitflow` opted in · `trunk` ours, not opted in yet · `external` someone else's repo · `local` no remote), the trunk and integration branch names, the owner of the **main repository** (origin), and a `drift` line when the current branch breaks the flow. Detected per repo; `.atlas` `flow` overrides it.
@@ -26,7 +33,7 @@ Canonical names — use these exact terms across all three consumers; they are t
 
 | Component | Path | Stack | Purpose |
 |-----------|------|-------|---------|
-| **atlas-api** | `atlas-api/` | SvelteKit 2, Svelte 5, Bun | Backend API on port 47891 — scans `~/Documents/development`, caches results, serves project metadata |
+| **atlas-api** | `atlas-api/` | SvelteKit 2, Svelte 5, Bun | Backend API on port 47891 — scans `~/dev`, caches results, serves project metadata |
 | **atlas-browser** | `atlas-browser/` | Raycast extension, React, TS | Raycast UI for browsing/filtering/acting on projects |
 | **atlas-picker** | `atlas-picker/` | Rust, iocraft, Nucleo | TUI fuzzy picker that reads from the API cache file directly |
 | **atlas-cli** | `atlas-cli/` | Bun, TS | Global **`atlas`** command — thin client to the API (`tree`/`info`/`init`/`new`/`scan`/`open`/`jump`/`pick`/`ports`/`flow`/`agent-log`/`prime`). Replaces per-project justfile recipes; `atlas new` is the scaffolding front door. `atlas prime` briefs a session (wired as a global SessionStart hook; `atlas agent-log session-end` as SessionEnd) |
@@ -104,6 +111,9 @@ writes to `$ATLAS_SHELL_FILE`, since a child process can't cd its parent shell.
 `atlas new` scaffolds a project — pick category → cookiecutter template → it appears in atlas
 instantly (forces a rescan). Replaces the standalone `_management/cookiecutter-picker`. New
 projects are born on the flow: `git init -b main`, a scaffold commit, and a `develop` branch.
+`atlas hosts` lists the catalogued machines and their last scan; `atlas hosts sync [id]` rebuilds
+the scan agent and ships it over SSH; `atlas hosts scan [id]` forces a refresh. `atlas jump`
+refuses a project that lives on another machine rather than `cd`-ing to a path that is not here.
 `atlas flow` shows the current project's branch flow, `atlas flow audit` lists which repos can
 safely move onto it (clean tree, on trunk, our remote) and which can't and why, and `atlas flow
 init [path]` opts one repo in — creates `develop`, renames `master` → `main`, writes the `.atlas`
@@ -113,8 +123,8 @@ init [path]` opts one repo in — creates `develop`, renames `master` → `main`
 
 ### Data flow
 
-1. **atlas-api** scans `~/Documents/development` recursively (3 levels max), detects project type/framework/runner/git/scripts/justfile/deploy
-2. Results cached in `~/Documents/development/.atlas-cache.json` (60s TTL, stale-while-revalidate)
+1. **atlas-api** scans `~/dev` recursively (3 levels max), detects project type/framework/runner/git/scripts/justfile/deploy
+2. Results cached in `~/dev/.atlas-cache.json` (60s TTL, stale-while-revalidate)
 3. **atlas-browser** fetches from `GET /api/projects` — Raycast UI with filters, search, and quick actions
 4. **atlas-picker** reads the cache file directly for instant startup, refreshes via API on Ctrl+R
 5. **atlas-watchdog** monitors port 47891 every 30s and restarts via launchd if down
@@ -124,9 +134,12 @@ init [path]` opts one repo in — creates `develop`, renames `master` → `main`
 | Endpoint | Method | Purpose |
 |----------|--------|---------|
 | `/api/projects` | GET | Main data endpoint (query: `?dir=`, `?includeArchived=true`) |
-| `/api/refresh` | POST | Force rescan |
+| `/api/refresh` | POST | Force rescan. `?host=<id>` refreshes one remote host and waits for it; `?force=true` ignores the 10-min fragment TTL |
 | `/api/git` | POST | Batch git status (`{ paths: [] }`) |
-| `/api/run` | POST/DELETE | Spawn/kill dev server |
+| `/api/run` | POST/DELETE | Spawn/kill dev server — `POST` persists the project's port to `.atlas` on first run and registers its Caddy dev hostnames, returning `{ port, url, local, remote }` |
+| `/api/hostnames` | GET | List registered dev hostnames (`{ slug, path, local, remote }[]`) from `.atlas-hostnames.json` |
+| `/api/hostnames` | POST/DELETE | Hostname-only assignment without spawning a server (`{ path }`): POST allocates or reuses the `.atlas` port and calls `ensureRoute`, 404 when the path is not in the cached scan; DELETE removes the route. Also called by `/api/rename` and `/api/move` for the old path. CLI: `atlas hostnames [assign\|rm] [path]` |
+| `/api/projects` | GET | (see above) also returns `hosts[]` — per-machine `status` / `scannedAt` / `projectCount` |
 | `/api/readme` | POST | Lazy README load |
 | `/api/description` | PUT | Update project description |
 | `/api/iterm` | POST | Open iTerm via AppleScript |
@@ -143,6 +156,28 @@ init [path]` opts one repo in — creates `develop`, renames `master` → `main`
 | `/api/templates` | GET | Discover cookiecutter templates under `ATLAS_TEMPLATES_DIR` (`{ family, name, description, version, path, variables }`) |
 | `/api/ports/allocate` | GET | Allocate an unused port from the atlas range (4100–4999) for a scaffolded project (`{ port }`) |
 | `/api/ports/audit` | GET | Report-only port-collision check across daemons + scanned projects (`{ collisions, unmanaged }`) — never writes |
+
+### Multi-host catalog
+
+atlas catalogs three machines. Only the Mac is ever written to.
+
+| Host | Role | Root | How it is scanned |
+|---|---|---|---|
+| `m2` | primary | `~/dev` | in-process, every 60s (stale-while-revalidate) |
+| `fractal` | satellite | `C:/dev` | SSH → scan agent, ~9s, git skipped |
+| `ubuntu` | deploy | `/home/jurrejan/development` | SSH → scan agent, ~7s, git included |
+
+- **Remote scans never block a request.** `GET /api/projects` answers from the merged cache in
+  ~30ms and kicks a TTL-guarded (10 min) background sweep. A host that is powered off keeps its
+  last projects and is reported `status: 'unreachable'` in `hosts[]` — the catalog degrades to
+  "ubuntu down, scanned 3h ago" instead of silently losing 26 projects.
+- **Fragments, then one merge.** Each remote host's projects live in
+  `~/dev/.atlas-cache-<id>.json`. `finalizeAtlas()` folds them into the main
+  cache. It is idempotent (it drops non-local projects before re-merging), which is what stops
+  the 60s revalidation from overwriting the merged catalog with a local-only scan.
+- **`git` runs only on local projects** during cache enrichment — a remote path has no repo here.
+- **Ports are per host.** `/api/ports/audit` and `allocatePort` reason over this machine's `lsof`
+  only. Ubuntu already has ~30 listeners (3110/3111/5180) and Fractal has Sunshine on 47984-48010.
 
 ### Shared types
 
@@ -172,8 +207,8 @@ Single source of truth for launchd daemons that atlas displays/manages. Hand-edi
 
 User launchd plists live in their owning repo under a `launchd/` subdirectory and are symlinked from `~/Library/LaunchAgents/`. The authoritative list is `shared/daemons.json` — every entry's `plist` field points at the source plist. Examples:
 - `atlas-api/launchd/com.jurrejan.atlas-api.plist`
-- `~/Documents/development/python/reminders-bridge/launchd/com.jurrejan.reminders-bridge.plist`
-- `~/Documents/development/dl-watcher/launchd/com.jurrejan.dlwatcher.plist`
+- `~/dev/python/reminders-bridge/launchd/com.jurrejan.reminders-bridge.plist`
+- `~/dev/dl-watcher/launchd/com.jurrejan.dlwatcher.plist`
 - `~/tools/vpn-subnet-fix/com.jurrejan.vpn-subnet-fix.plist`
 
 Plists are edited by humans only. atlas-api never writes plists in v1.
@@ -192,4 +227,7 @@ Plists are edited by humans only. atlas-api never writes plists in v1.
 - **Liveness is `GET /api/health`, never `/`** — the root page is the heaviest route and a UI 500 must not read as "API dead"
 - **A health-probe timeout means busy, not dead** — `isUp()` counts only a refused connection as down, and `/api/projects` refreshes a stale cache in the background instead of serving it forever. Both cost a night of chasing a daemon that was up the whole time
 - **Pollers use `launchctl kickstart` without `-k`** — `-k` SIGKILLs a live-but-slow job; plain `kickstart` no-ops on a running one, and `KeepAlive` handles real crashes. `-k` is only for deliberate restarts (`daemon:reload`)
+- **Dev hostnames each cost two ACME certificates** — the NAS wildcard is `*.jurrejan.com` and does not reach `<slug>.atlas.local/remote.jurrejan.com`, so every `ensureRoute` issues two per-hostname certs and reloads the whole Caddyfile. Bulk registration needs a `*.atlas.local` / `*.atlas.remote` DNS-01 wildcard first (see `.orchestrate/report.md`, 2026-09-03)
+- **Never store an IP for a host** — every machine on this LAN is DHCP with no reservation and the M2 already drifted `.145` → `.180` once, silently breaking a cross-machine sync. `hosts.json` holds SSH aliases only
+- **Writes are confined to the primary host by the API, not by the UI** — `resolveLocal()` (`$lib/config`) runs every path through `resolveInCatalog`, which rejects a non-absolute candidate first. Without that check a Windows path like `C:\dev\web\foo` is *relative* on macOS and resolves under the daemon's own cwd, which sits inside the catalog — so it passed the guard. Action gating is the second layer, never the only one
 - **Git worktrees of atlas-api need `.claude/worktrees/shared` symlinked to `../shared`** — the `$shared` alias resolves relative to the repo root, so a worktree at `.claude/worktrees/<name>` can't build without it
