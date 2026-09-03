@@ -1,0 +1,34 @@
+{
+  "version": 1,
+  "hosts": [
+    {
+      "id": "m2",
+      "label": "M2 Pro",
+      "ssh": null,
+      "root": "~/dev",
+      "os": "darwin",
+      "role": "primary"
+    },
+    {
+      "id": "fractal",
+      "label": "Fractal",
+      "ssh": "fractal",
+      "root": "C:/dev",
+      "os": "win32",
+      "role": "satellite",
+      "node": "node",
+      "agent": "C:/Users/jurre/.atlas/atlas-scan.mjs",
+      "skipGit": true
+    },
+    {
+      "id": "ubuntu",
+      "label": "Ubuntu",
+      "ssh": "ubuntu",
+      "root": "/home/jurrejan/development",
+      "os": "linux",
+      "role": "deploy",
+      "node": "/usr/bin/node",
+      "agent": "/home/jurrejan/.atlas/atlas-scan.mjs"
+    }
+  ]
+}

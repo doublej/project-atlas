@@ -5,8 +5,8 @@
       "label": "com.jurrejan.atlas-api",
       "name": "Atlas API",
       "port": 47891,
-      "project": "/Users/jurrejan/Documents/development/multi-stack/project-atlas/atlas-api",
-      "plist": "/Users/jurrejan/Documents/development/multi-stack/project-atlas/atlas-api/launchd/com.jurrejan.atlas-api.plist",
+      "project": "/Users/jurrejan/dev/multi-stack/project-atlas/atlas-api",
+      "plist": "/Users/jurrejan/dev/multi-stack/project-atlas/atlas-api/launchd/com.jurrejan.atlas-api.plist",
       "logs": {
         "stdout": "/tmp/atlas-api.log",
         "stderr": "/tmp/atlas-api.error.log"
@@ -16,8 +16,8 @@
     {
       "label": "com.jurrejan.reminders-bridge",
       "name": "Reminders Bridge",
-      "project": "/Users/jurrejan/Documents/development/python/reminders-bridge",
-      "plist": "/Users/jurrejan/Documents/development/python/reminders-bridge/launchd/com.jurrejan.reminders-bridge.plist",
+      "project": "/Users/jurrejan/dev/python/reminders-bridge",
+      "plist": "/Users/jurrejan/dev/python/reminders-bridge/launchd/com.jurrejan.reminders-bridge.plist",
       "logs": {
         "stdout": "~/Library/Logs/reminders-bridge.log",
         "stderr": "~/Library/Logs/reminders-bridge.log"
@@ -26,8 +26,8 @@
     {
       "label": "com.jurrejan.dlwatcher",
       "name": "Download Watcher",
-      "project": "/Users/jurrejan/Documents/development/dl-watcher",
-      "plist": "/Users/jurrejan/Documents/development/dl-watcher/launchd/com.jurrejan.dlwatcher.plist",
+      "project": "/Users/jurrejan/dev/dl-watcher",
+      "plist": "/Users/jurrejan/dev/dl-watcher/launchd/com.jurrejan.dlwatcher.plist",
       "logs": {
         "stdout": "~/Library/Logs/dl-watcher.stdout.log",
         "stderr": "~/Library/Logs/dl-watcher.stderr.log"
@@ -43,19 +43,19 @@
       "label": "com.jurrejan.parakeet",
       "name": "Parakeet ASR Server",
       "port": 8765,
-      "project": "/Users/jurrejan/Documents/development/python/parakeet-server",
-      "plist": "/Users/jurrejan/Documents/development/python/parakeet-server/launchd/com.jurrejan.parakeet.plist",
+      "project": "/Users/jurrejan/dev/python/parakeet-server",
+      "plist": "/Users/jurrejan/dev/python/parakeet-server/launchd/com.jurrejan.parakeet.plist",
       "logs": {
-        "stdout": "/Users/jurrejan/Documents/development/python/parakeet-server/logs/parakeet.out.log",
-        "stderr": "/Users/jurrejan/Documents/development/python/parakeet-server/logs/parakeet.err.log"
+        "stdout": "/Users/jurrejan/dev/python/parakeet-server/logs/parakeet.out.log",
+        "stderr": "/Users/jurrejan/dev/python/parakeet-server/logs/parakeet.err.log"
       },
       "disabled": "2026-09-03: launchctl disable \u2014 7.7 GB resident on 16 GB Mac; re-enable with launchctl enable gui/501/com.jurrejan.parakeet + bootstrap"
     },
     {
       "label": "com.jurrejan.macos-data-keeper",
       "name": "macOS Data Keeper",
-      "project": "/Users/jurrejan/Documents/development/python/macos-data-keeper",
-      "plist": "/Users/jurrejan/Documents/development/python/macos-data-keeper/launchd/com.jurrejan.macos-data-keeper.plist",
+      "project": "/Users/jurrejan/dev/python/macos-data-keeper",
+      "plist": "/Users/jurrejan/dev/python/macos-data-keeper/launchd/com.jurrejan.macos-data-keeper.plist",
       "logs": {
         "stdout": "~/Library/Logs/macos-data-keeper/stdout.log",
         "stderr": "~/Library/Logs/macos-data-keeper/stderr.log"
@@ -64,8 +64,8 @@
     {
       "label": "com.jurrejan.disk-autoclean",
       "name": "Disk Autoclean",
-      "project": "/Users/jurrejan/Documents/development/_management/disk",
-      "plist": "/Users/jurrejan/Documents/development/_management/disk/launchd/com.jurrejan.disk-autoclean.plist",
+      "project": "/Users/jurrejan/dev/_management/disk",
+      "plist": "/Users/jurrejan/dev/_management/disk/launchd/com.jurrejan.disk-autoclean.plist",
       "logs": {
         "stdout": "~/Library/Logs/disk-autoclean/launchd.out.log",
         "stderr": "~/Library/Logs/disk-autoclean/launchd.err.log"
@@ -84,8 +84,8 @@
     {
       "label": "com.claude.statusline-cache",
       "name": "Claude Statusline Cache",
-      "project": "/Users/jurrejan/Documents/development/_management/claude-history-browser",
-      "plist": "/Users/jurrejan/Documents/development/_management/claude-history-browser/launchd/com.claude.statusline-cache.plist",
+      "project": "/Users/jurrejan/dev/_management/claude-history-browser",
+      "plist": "/Users/jurrejan/dev/_management/claude-history-browser/launchd/com.claude.statusline-cache.plist",
       "logs": {
         "stdout": "~/.claude/statusline-cache.log",
         "stderr": "~/.claude/statusline-cache.log"
@@ -104,19 +104,19 @@
     {
       "label": "com.jj.poolsuite-watch",
       "name": "Poolsuite Mail Watcher",
-      "project": "/Users/jurrejan/Documents/development/_life",
-      "plist": "/Users/jurrejan/Documents/development/_life/system/automation/com.jj.poolsuite-watch.plist",
+      "project": "/Users/jurrejan/dev/_life",
+      "plist": "/Users/jurrejan/dev/_life/system/automation/com.jj.poolsuite-watch.plist",
       "logs": {
-        "stdout": "/Users/jurrejan/Documents/development/_life/.logs/poolsuite_watch.out.log",
-        "stderr": "/Users/jurrejan/Documents/development/_life/.logs/poolsuite_watch.err.log"
+        "stdout": "/Users/jurrejan/dev/_life/.logs/poolsuite_watch.out.log",
+        "stderr": "/Users/jurrejan/dev/_life/.logs/poolsuite_watch.err.log"
       }
     },
     {
       "label": "com.jurrejan.suno-preview",
       "name": "Suno Live Preview",
       "port": 47895,
-      "project": "/Users/jurrejan/Documents/development/_management/codex-skills/craft-suno-songs",
-      "plist": "/Users/jurrejan/Documents/development/_management/codex-skills/craft-suno-songs/launchd/com.jurrejan.suno-preview.plist",
+      "project": "/Users/jurrejan/dev/_management/codex-skills/craft-suno-songs",
+      "plist": "/Users/jurrejan/dev/_management/codex-skills/craft-suno-songs/launchd/com.jurrejan.suno-preview.plist",
       "logs": {
         "stdout": "~/Library/Logs/suno-preview.log",
         "stderr": "~/Library/Logs/suno-preview.log"
@@ -126,8 +126,8 @@
       "label": "com.jurrejan.suno-feedback",
       "name": "Suno Skill Feedback",
       "port": 47894,
-      "project": "/Users/jurrejan/Documents/development/_management/codex-skills/craft-suno-songs",
-      "plist": "/Users/jurrejan/Documents/development/_management/codex-skills/craft-suno-songs/launchd/com.jurrejan.suno-feedback.plist",
+      "project": "/Users/jurrejan/dev/_management/codex-skills/craft-suno-songs",
+      "plist": "/Users/jurrejan/dev/_management/codex-skills/craft-suno-songs/launchd/com.jurrejan.suno-feedback.plist",
       "logs": {
         "stdout": "~/Library/Logs/suno-feedback.log",
         "stderr": "~/Library/Logs/suno-feedback.log"
@@ -137,8 +137,8 @@
       "label": "com.jurrejan.agent-mail",
       "name": "Agent Mail (MCP)",
       "port": 8766,
-      "project": "/Users/jurrejan/Documents/development/mcp/mcp_agent_mail",
-      "plist": "/Users/jurrejan/Documents/development/mcp/mcp_agent_mail/launchd/com.jurrejan.agent-mail.plist",
+      "project": "/Users/jurrejan/dev/mcp/mcp_agent_mail",
+      "plist": "/Users/jurrejan/dev/mcp/mcp_agent_mail/launchd/com.jurrejan.agent-mail.plist",
       "logs": {
         "stdout": "~/Library/Logs/agent-mail.out.log",
         "stderr": "~/Library/Logs/agent-mail.err.log"
@@ -147,8 +147,8 @@
     {
       "label": "com.jurrejan.gui-path",
       "name": "GUI PATH (for aw-qt module discovery)",
-      "project": "/Users/jurrejan/Documents/development/python/aw-watcher-agents",
-      "plist": "/Users/jurrejan/Documents/development/python/aw-watcher-agents/launchd/com.jurrejan.gui-path.plist",
+      "project": "/Users/jurrejan/dev/python/aw-watcher-agents",
+      "plist": "/Users/jurrejan/dev/python/aw-watcher-agents/launchd/com.jurrejan.gui-path.plist",
       "note": "RunAtLoad one-shot: launchctl setenv PATH. Lets aw-qt find ~/.local/bin/aw-watcher-agents. aw-watcher-agents itself is started by aw-qt, not launchd.",
       "logs": {
         "stdout": "(none)",
@@ -158,8 +158,8 @@
     {
       "label": "com.jurrejan.aw-backup",
       "name": "ActivityWatch monthly backup",
-      "project": "/Users/jurrejan/Documents/development/python/aw-watcher-agents",
-      "plist": "/Users/jurrejan/Documents/development/python/aw-watcher-agents/launchd/com.jurrejan.aw-backup.plist",
+      "project": "/Users/jurrejan/dev/python/aw-watcher-agents",
+      "plist": "/Users/jurrejan/dev/python/aw-watcher-agents/launchd/com.jurrejan.aw-backup.plist",
       "note": "1st of the month 04:30: VACUUM INTO snapshot of the AW sqlite.db, gzipped to _data/aw-backups, last 12 kept.",
       "logs": {
         "stdout": "/Users/jurrejan/Library/Logs/aw-backup.log",
@@ -169,8 +169,8 @@
     {
       "label": "com.hyndsyght.daemon",
       "name": "hyndsyght",
-      "project": "/Users/jurrejan/Documents/development/python/hyndsyght",
-      "plist": "/Users/jurrejan/Documents/development/python/hyndsyght/launchd/com.hyndsyght.daemon.plist",
+      "project": "/Users/jurrejan/dev/python/hyndsyght",
+      "plist": "/Users/jurrejan/dev/python/hyndsyght/launchd/com.hyndsyght.daemon.plist",
       "logs": {
         "stdout": "~/Library/Logs/hyndsyght/daemon.out.log",
         "stderr": "~/Library/Logs/hyndsyght/daemon.err.log"
@@ -179,8 +179,8 @@
     {
       "label": "com.doublej.consultusermcp.devid-watch",
       "name": "Developer ID Cert Watch",
-      "project": "/Users/jurrejan/Documents/development/mcp/consult-user-mcp",
-      "plist": "/Users/jurrejan/Documents/development/mcp/consult-user-mcp/launchd/com.doublej.consultusermcp.devid-watch.plist",
+      "project": "/Users/jurrejan/dev/mcp/consult-user-mcp",
+      "plist": "/Users/jurrejan/dev/mcp/consult-user-mcp/launchd/com.doublej.consultusermcp.devid-watch.plist",
       "logs": {
         "stdout": "/tmp/devid-watch.log",
         "stderr": "/tmp/devid-watch.log"
@@ -192,8 +192,8 @@
       "label": "com.binwatch.tunnel",
       "name": "binwatch tunnel",
       "port": 8842,
-      "project": "/Users/jurrejan/Documents/development/python/binwatch",
-      "plist": "/Users/jurrejan/Documents/development/python/binwatch/launchd/com.binwatch.tunnel.plist",
+      "project": "/Users/jurrejan/dev/python/binwatch",
+      "plist": "/Users/jurrejan/dev/python/binwatch/launchd/com.binwatch.tunnel.plist",
       "logs": {
         "stdout": "/tmp/binwatch-tunnel.log",
         "stderr": "/tmp/binwatch-tunnel.log"
@@ -203,8 +203,8 @@
     {
       "label": "com.binwatch.popup",
       "name": "binwatch popup",
-      "project": "/Users/jurrejan/Documents/development/python/binwatch",
-      "plist": "/Users/jurrejan/Documents/development/python/binwatch/launchd/com.binwatch.popup.plist",
+      "project": "/Users/jurrejan/dev/python/binwatch",
+      "plist": "/Users/jurrejan/dev/python/binwatch/launchd/com.binwatch.popup.plist",
       "logs": {
         "stdout": "/tmp/binwatch-popup.log",
         "stderr": "/tmp/binwatch-popup.log"
@@ -214,8 +214,8 @@
     {
       "label": "com.jurrejan.dock-unfreeze",
       "name": "Dock Unfreeze",
-      "project": "/Users/jurrejan/Documents/development/python/dock-unfreeze",
-      "plist": "/Users/jurrejan/Documents/development/python/dock-unfreeze/launchd/com.jurrejan.dock-unfreeze.plist",
+      "project": "/Users/jurrejan/dev/python/dock-unfreeze",
+      "plist": "/Users/jurrejan/dev/python/dock-unfreeze/launchd/com.jurrejan.dock-unfreeze.plist",
       "logs": {
         "stdout": "~/Library/Logs/dock-unfreeze/stdout.log",
         "stderr": "~/Library/Logs/dock-unfreeze/stderr.log"
@@ -226,16 +226,16 @@
       "label": "bud-fix-worker.service",
       "name": "group-chat-bud /fix worker",
       "host": "ubuntu-server",
-      "project": "/Users/jurrejan/Documents/development/node/group-chat-bud",
-      "unit": "/Users/jurrejan/Documents/development/node/group-chat-bud/scripts/fix-worker.service",
+      "project": "/Users/jurrejan/dev/node/group-chat-bud",
+      "unit": "/Users/jurrejan/dev/node/group-chat-bud/scripts/fix-worker.service",
       "notes": "systemd on ubuntu-server, not launchd. Installed at /etc/systemd/system/bud-fix-worker.service, running from /home/jurrejan/development/group-chat-bud. Drains the /fix queue the container writes to the shared bind mount. Logs: journalctl -u bud-fix-worker."
     },
     {
       "label": "bud-backup.timer",
       "name": "group-chat-bud nightly backup",
       "host": "ubuntu-server",
-      "project": "/Users/jurrejan/Documents/development/node/group-chat-bud",
-      "unit": "/Users/jurrejan/Documents/development/node/group-chat-bud/scripts/backup.timer",
+      "project": "/Users/jurrejan/dev/node/group-chat-bud",
+      "unit": "/Users/jurrejan/dev/node/group-chat-bud/scripts/backup.timer",
       "notes": "systemd timer on ubuntu-server, not launchd. Fires bud-backup.service (scripts/backup.service) at 04:15 daily: VACUUM INTO snapshot, tar of bud-data + bud-claude to ~/backups/group-chat-bud, 14-day prune, rsync to the NAS. Restore procedure: DEPLOY.md."
     },
     {
@@ -251,8 +251,8 @@
     {
       "label": "com.jurrejan.memwatch",
       "name": "Memory Watchdog",
-      "project": "/Users/jurrejan/Documents/development/_management/memory",
-      "plist": "/Users/jurrejan/Documents/development/_management/memory/launchd/com.jurrejan.memwatch.plist",
+      "project": "/Users/jurrejan/dev/_management/memory",
+      "plist": "/Users/jurrejan/dev/_management/memory/launchd/com.jurrejan.memwatch.plist",
       "logs": {
         "stdout": "~/Library/Logs/memwatch/launchd.out.log",
         "stderr": "~/Library/Logs/memwatch/launchd.err.log"
