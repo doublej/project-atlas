@@ -257,6 +257,18 @@
         "stdout": "~/Library/Logs/memwatch/launchd.out.log",
         "stderr": "~/Library/Logs/memwatch/launchd.err.log"
       }
+    },
+    {
+      "label": "com.jurrejan.deckhand",
+      "name": "Deckhand",
+      "port": 4180,
+      "project": "/Users/jurrejan/dev/multi-stack/deckhand",
+      "plist": "/Users/jurrejan/dev/multi-stack/deckhand/launchd/com.jurrejan.deckhand.plist",
+      "logs": {
+        "stdout": "/tmp/deckhand.log",
+        "stderr": "/tmp/deckhand.error.log"
+      },
+      "selfManaged": true
     }
   ]
 }
