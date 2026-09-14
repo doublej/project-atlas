@@ -228,6 +228,12 @@ Plists are edited by humans only. atlas-api never writes plists in v1.
 - **A health-probe timeout means busy, not dead** — `isUp()` counts only a refused connection as down, and `/api/projects` refreshes a stale cache in the background instead of serving it forever. Both cost a night of chasing a daemon that was up the whole time
 - **Pollers use `launchctl kickstart` without `-k`** — `-k` SIGKILLs a live-but-slow job; plain `kickstart` no-ops on a running one, and `KeepAlive` handles real crashes. `-k` is only for deliberate restarts (`daemon:reload`)
 - **Dev hostnames each cost two ACME certificates** — the NAS wildcard is `*.jurrejan.com` and does not reach `<slug>.atlas.local/remote.jurrejan.com`, so every `ensureRoute` issues two per-hostname certs and reloads the whole Caddyfile. Bulk registration needs a `*.atlas.local` / `*.atlas.remote` DNS-01 wildcard first (see `.orchestrate/report.md`, 2026-09-03)
+- **`/api/run` derives a project's running server from the OS, never from memory** — listeners
+  on the project's port whose cwd is the project are stopped and waited for before every spawn
+  (`stopProjectListeners`); an in-memory pid map died with each daemon restart and left the old
+  server squatting the port, so Vite shifted to port+1 behind a hostname routed to the old one.
+  `--host 0.0.0.0` is injected on its own even when the script pins `--port`, or the bind is
+  loopback-only and the hostname 502s. The CLI asks `wait: 60000` and trusts `bound`, not the 8s guess
 - **Never store an IP for a host** — every machine on this LAN is DHCP with no reservation and the M2 already drifted `.145` → `.180` once, silently breaking a cross-machine sync. `hosts.json` holds SSH aliases only
 - **Writes are confined to the primary host by the API, not by the UI** — `resolveLocal()` (`$lib/config`) runs every path through `resolveInCatalog`, which rejects a non-absolute candidate first. Without that check a Windows path like `C:\dev\web\foo` is *relative* on macOS and resolves under the daemon's own cwd, which sits inside the catalog — so it passed the guard. Action gating is the second layer, never the only one
 - **Git worktrees of atlas-api need `.claude/worktrees/shared` symlinked to `../shared`** — the `$shared` alias resolves relative to the repo root, so a worktree at `.claude/worktrees/<name>` can't build without it
