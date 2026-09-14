@@ -36,8 +36,8 @@
     {
       "label": "com.jurrejan.vpn-subnet-fix",
       "name": "VPN Subnet Fix",
-      "project": "/Users/jurrejan/tools/vpn-subnet-fix",
-      "plist": "/Users/jurrejan/tools/vpn-subnet-fix/com.jurrejan.vpn-subnet-fix.plist"
+      "project": "/Users/jurrejan/dev/_management/tools/vpn-subnet-fix",
+      "plist": "/Users/jurrejan/dev/_management/tools/vpn-subnet-fix/com.jurrejan.vpn-subnet-fix.plist"
     },
     {
       "label": "com.jurrejan.parakeet",
@@ -241,8 +241,8 @@
     {
       "label": "com.jurrejan.telegram-morning",
       "name": "Telegram Morning Timer",
-      "project": "/Users/jurrejan/tools/telegram-morning",
-      "plist": "/Users/jurrejan/tools/telegram-morning/com.jurrejan.telegram-morning.plist",
+      "project": "/Users/jurrejan/dev/_management/tools/telegram-morning",
+      "plist": "/Users/jurrejan/dev/_management/tools/telegram-morning/com.jurrejan.telegram-morning.plist",
       "logs": {
         "stdout": "~/Library/Logs/telegram-morning.log",
         "stderr": "~/Library/Logs/telegram-morning.log"
