@@ -49,7 +49,7 @@
         "stdout": "/Users/jurrejan/dev/python/parakeet-server/logs/parakeet.out.log",
         "stderr": "/Users/jurrejan/dev/python/parakeet-server/logs/parakeet.err.log"
       },
-      "disabled": "2026-09-03: launchctl disable \u2014 7.7 GB resident on 16 GB Mac; re-enable with launchctl enable gui/501/com.jurrejan.parakeet + bootstrap"
+      "disabled": "2026-09-03: launchctl disable — 7.7 GB resident on 16 GB Mac; re-enable with launchctl enable gui/501/com.jurrejan.parakeet + bootstrap"
     },
     {
       "label": "com.jurrejan.macos-data-keeper",
@@ -269,6 +269,17 @@
         "stderr": "/tmp/deckhand.error.log"
       },
       "selfManaged": true
+    },
+    {
+      "label": "com.jurrejan.pimpelmees-theme-linear-sync",
+      "name": "Pimpelmees theme Linear sync",
+      "project": "/Users/jurrejan/dev/multi-stack/pimpelmees/webshop/theme-pimpelmees",
+      "plist": "/Users/jurrejan/dev/multi-stack/pimpelmees/webshop/theme-pimpelmees/launchd/com.jurrejan.pimpelmees-theme-linear-sync.plist",
+      "logs": {
+        "stdout": "~/Library/Logs/pimpelmees-theme-linear-sync.log",
+        "stderr": "~/Library/Logs/pimpelmees-theme-linear-sync.log"
+      },
+      "note": "Two-way Linear PIM <-> theme beads (pmt), every 15 min via `just linear-sync`"
     }
   ]
 }
