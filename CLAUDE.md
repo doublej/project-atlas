@@ -31,7 +31,7 @@ Canonical names — use these exact terms across all three consumers; they are t
 - **action registry** — `shared/actions.json`: what project actions exist and when. Not "commands", not "buttons".
 - **daemon registry** — `shared/daemons.json`: the launchd daemons atlas displays/manages.
 - **consumer** — one of the three UIs reading the shared shapes: atlas-api, atlas-browser, atlas-picker.
-- **web console** — atlas-api's own UI, one shell over four routes — every route sits under the same nav band (`Nav.svelte`), which also carries the single theme toggle: `/` (projects, with host badges, `alsoOn` twins and the per-project settings dialog), `/system` (hosts, scanner config, daemons, port audit), `/templates`, `/claude-tree`.
+- **web console** — atlas-api's own UI, one shell over five routes — every route sits under the same nav band (`Nav.svelte`), which also carries the single theme toggle: `/` (projects, with host badges, `alsoOn` twins and the per-project settings dialog), `/ports` (every listener on the Mac grouped by owner — project, service, docker, system — with select-and-kill; the Active Ports dashboard, folded in), `/system` (hosts, scanner config, daemons, services, port audit), `/templates`, `/claude-tree`.
 </vocabulary>
 
 ## Components
@@ -166,6 +166,8 @@ init [path]` opts one repo in — creates `develop`, renames `master` → `main`
 | `/api/categories` | GET | Depth-1 dev categories from the cached scan (`{ name, projectCount, dominantType }`) — for `atlas new` |
 | `/api/templates` | GET | Discover cookiecutter templates under `ATLAS_TEMPLATES_DIR` (`{ family, name, description, version, path, variables }`) |
 | `/api/ports/allocate` | GET | Allocate an unused port from the atlas range (4100–4999) for a scaffolded project (`{ port }`) |
+| `/api/ports/listeners` | GET | Every TCP listener on this Mac joined with its owner (`{ listeners, updatedAt }`); 10s cache, `?fresh=1` skips it |
+| `/api/ports/kill` | POST | `{ pids }` → SIGKILL, restricted to pids the listener scan saw and never atlas-api itself |
 | `/api/ports/audit` | GET | Report-only port-collision check across daemons + scanned projects (`{ collisions, unmanaged }`) — never writes |
 
 ### Multi-host catalog
