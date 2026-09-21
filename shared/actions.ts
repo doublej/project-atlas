@@ -34,6 +34,8 @@ export interface ActionRegistry {
 export const registry = registryData as ActionRegistry;
 
 export interface ProjectLike {
+	/** Only the primary host's projects carry this. Its absence is what hides every write action. */
+	isLocal?: boolean;
 	devCommand?: string;
 	runner?: string;
 	scripts?: Record<string, string>;
@@ -48,6 +50,7 @@ export interface ProjectLike {
 
 function getField(project: ProjectLike, field: string): unknown {
 	switch (field) {
+		case 'isLocal': return project.isLocal;
 		case 'devCommand': return project.devCommand;
 		case 'runner': return project.runner;
 		case 'scripts': return project.scripts;

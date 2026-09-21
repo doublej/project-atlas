@@ -18,6 +18,7 @@
       "icon": "terminal",
       "shortcut": "cmd+t",
       "type": "api",
+      "condition": ["isLocal"],
       "api": { "method": "POST", "endpoint": "/api/iterm" }
     },
     {
@@ -27,6 +28,7 @@
       "icon": "folder",
       "shortcut": "cmd+f",
       "type": "api",
+      "condition": ["isLocal"],
       "api": { "method": "POST", "endpoint": "/api/finder" }
     },
     {
@@ -35,7 +37,8 @@
       "group": "open",
       "icon": "app",
       "shortcut": "cmd+o",
-      "type": "open-path"
+      "type": "open-path",
+      "condition": ["isLocal"]
     },
     {
       "id": "open-claude-code",
@@ -43,6 +46,7 @@
       "group": "code",
       "icon": "stars",
       "type": "iterm-command",
+      "condition": ["isLocal"],
       "command": "claude --dangerously-skip-permissions"
     },
     {
@@ -51,7 +55,7 @@
       "group": "code",
       "icon": "stars",
       "type": "iterm-command",
-      "condition": ["claudeSessions"],
+      "condition": ["claudeSessions", "isLocal"],
       "command": "claude --continue"
     },
     {
@@ -61,6 +65,7 @@
       "icon": "wand",
       "shortcut": "cmd+shift+x",
       "type": "iterm-command",
+      "condition": ["isLocal"],
       "command": "codex --full-auto"
     },
     {
@@ -69,6 +74,7 @@
       "group": "code",
       "icon": "terminal",
       "type": "iterm-command",
+      "condition": ["isLocal"],
       "command": "opencode"
     },
     {
@@ -78,7 +84,7 @@
       "icon": "play",
       "shortcut": "cmd+r",
       "type": "api",
-      "condition": ["devCommand", "runner"],
+      "condition": ["devCommand", "runner", "isLocal"],
       "api": { "method": "POST", "endpoint": "/api/run" }
     },
     {
@@ -88,7 +94,7 @@
       "icon": "play",
       "type": "api",
       "dynamic": "scripts",
-      "condition": ["scripts"],
+      "condition": ["scripts", "isLocal"],
       "api": { "method": "POST", "endpoint": "/api/run" }
     },
     {
@@ -98,7 +104,7 @@
       "icon": "play",
       "type": "api",
       "dynamic": "justRecipes",
-      "condition": ["hasJustfile", "justRecipes"],
+      "condition": ["hasJustfile", "justRecipes", "isLocal"],
       "api": { "method": "POST", "endpoint": "/api/run" }
     },
     {
@@ -107,6 +113,7 @@
       "group": "run",
       "icon": "stop",
       "type": "api",
+      "condition": ["isLocal"],
       "api": { "method": "DELETE", "endpoint": "/api/run" }
     },
     {
@@ -116,6 +123,7 @@
       "icon": "plus",
       "shortcut": "cmd+1",
       "type": "api",
+      "condition": ["isLocal"],
       "api": { "method": "POST", "endpoint": "/api/agent-files" }
     },
     {
@@ -125,6 +133,7 @@
       "icon": "plus",
       "shortcut": "cmd+2",
       "type": "api",
+      "condition": ["isLocal"],
       "api": { "method": "POST", "endpoint": "/api/agent-files" }
     },
     {
@@ -133,6 +142,7 @@
       "group": "agent",
       "icon": "arrow-right",
       "type": "api",
+      "condition": ["isLocal"],
       "api": { "method": "PUT", "endpoint": "/api/agent-files" }
     },
     {
@@ -141,6 +151,7 @@
       "group": "agent",
       "icon": "arrow-right",
       "type": "api",
+      "condition": ["isLocal"],
       "api": { "method": "PUT", "endpoint": "/api/agent-files" }
     },
     {
@@ -149,6 +160,7 @@
       "group": "agent",
       "icon": "terminal",
       "type": "iterm-command",
+      "condition": ["isLocal"],
       "command": "atlas agent-log recent"
     },
     {
@@ -157,6 +169,7 @@
       "group": "agent",
       "icon": "tree",
       "type": "open-url",
+      "condition": ["isLocal"],
       "value": "/claude-tree?root={{project.path}}"
     },
     {
@@ -175,7 +188,7 @@
       "icon": "clipboard",
       "shortcut": "cmd+shift+d",
       "type": "clipboard",
-      "condition": ["devCommand"],
+      "condition": ["devCommand", "isLocal"],
       "value": "cd {{project.path}} && {{devCommand}}"
     },
     {
@@ -183,14 +196,16 @@
       "label": "Copy CLAUDE.md",
       "group": "copy",
       "icon": "clipboard",
-      "type": "clipboard"
+      "type": "clipboard",
+      "condition": ["isLocal"]
     },
     {
       "id": "copy-env",
       "label": "Copy .env",
       "group": "copy",
       "icon": "clipboard",
-      "type": "clipboard"
+      "type": "clipboard",
+      "condition": ["isLocal"]
     },
     {
       "id": "deploy-open",
@@ -212,7 +227,7 @@
     },
     {
       "id": "umami-open",
-      "label": "Umami · {{name}}",
+      "label": "Umami \u00b7 {{name}}",
       "group": "deploy",
       "icon": "chart",
       "type": "open-url",
@@ -225,6 +240,7 @@
       "group": "manage",
       "icon": "pencil",
       "type": "api",
+      "condition": ["isLocal"],
       "consumers": ["svelte"],
       "api": { "method": "POST", "endpoint": "/api/rename" }
     },
@@ -234,8 +250,20 @@
       "group": "manage",
       "icon": "folder",
       "type": "api",
+      "condition": ["isLocal"],
       "consumers": ["svelte"],
       "api": { "method": "POST", "endpoint": "/api/move" }
+    },
+    {
+      "id": "project-settings",
+      "label": "Project Settings",
+      "group": "manage",
+      "icon": "pencil",
+      "shortcut": "cmd+,",
+      "type": "form",
+      "condition": ["isLocal"],
+      "consumers": ["svelte"],
+      "api": { "method": "PATCH", "endpoint": "/api/atlas" }
     },
     {
       "id": "edit-description",
@@ -243,6 +271,7 @@
       "group": "manage",
       "icon": "pencil",
       "type": "inline-edit",
+      "condition": ["isLocal"],
       "consumers": ["svelte"],
       "api": { "method": "PUT", "endpoint": "/api/description" }
     },
@@ -262,7 +291,8 @@
       "icon": "plus",
       "shortcut": "cmd+shift+t",
       "type": "form",
-      "consumers": ["raycast"],
+      "condition": ["isLocal"],
+      "consumers": ["raycast", "svelte"],
       "api": { "method": "POST", "endpoint": "/api/beads" }
     },
     {
@@ -272,8 +302,8 @@
       "icon": "ticket",
       "shortcut": "cmd+b",
       "type": "iterm-command",
-      "condition": ["beads"],
-      "consumers": ["raycast"],
+      "condition": ["beads", "isLocal"],
+      "consumers": ["raycast", "svelte"],
       "command": "bd ready"
     }
   ]

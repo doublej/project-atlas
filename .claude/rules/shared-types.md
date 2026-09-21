@@ -17,6 +17,21 @@ When you change a type in any of these files, update all three:
 | `atlas-browser/src/scanner.ts` | TS (consumer) | `camelCase`, must match the API field names exactly |
 | `atlas-picker/src/project.rs` | Rust (consumer) | `snake_case` fields; map to the JSON names with `#[serde(rename = "...")]` / serde rename, e.g. `relative_path` ↔ `relativePath`, `project_type` ↔ `type`, `dev_command` ↔ `devCommand` |
 
+## Multi-host fields
+
+Three fields carry the machine axis. They are the reason a stale cache must never hard-fail:
+
+| Field | JSON | Rust mirror |
+|---|---|---|
+| host | `host: string` | `#[serde(default)] pub host: Option<String>` |
+| isLocal | `isLocal?: boolean` (present only when true) | `#[serde(default)] pub is_local: Option<bool>` |
+| alsoOn | `alsoOn?: {host, path}[]` | `#[serde(default)] pub also_on: Option<Vec<HostLink>>` |
+
+`host` is `Option<String>` in Rust even though the API always emits it: atlas-picker never reads
+`shapeVersion`, so a required field would make it fail to deserialize a pre-multi-host cache and
+hard-exit at `main.rs` — the whole picker, not one row. `ProjectAtlas` also gained `hosts?:
+HostState[]` (per-machine `status` / `scannedAt` / `projectCount`).
+
 ## Checklist when editing a `Project` field
 
 1. Add/change the field in `scanner.ts` (the API).

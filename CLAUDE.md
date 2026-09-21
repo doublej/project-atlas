@@ -19,14 +19,17 @@ Canonical names — use these exact terms across all three consumers; they are t
 - **scan agent** — a bundled copy of the scanner (`bun run agent:build`) shipped to each remote host by `atlas hosts sync` and run over SSH. Its `--json` mode prints a `ProjectAtlas` on stdout and writes nothing.
 - **domains** — the production domains a project publishes on, detected from its own files (CNAME, vercel/wrangler config, `package.json` homepage, `og:url`, robots.txt, env). Never fetched from a provider.
 - **umami** — the Umami analytics link: `websiteIds` found in the project's tracking snippets plus the `instance` base URL. Dashboard URL is `{instance}/websites/{websiteId}`.
+- **claudeSetup** — a project's Claude Code situation: the MCP servers scoped to it (its `.mcp.json` plus any added with `claude mcp add`, and which of them are switched off) and what `.claude/` carries (agents, commands, skills, rules, hook events, which settings files exist). Counts and names, never file contents — `agentFiles` holds the CLAUDE.md/AGENTS.md token estimates, and claude-tree is where the files themselves are read. MCP on/off state comes from `~/.claude.json`, which is why only an explicit "off" is reported: approval for a project that has never been opened is written nowhere.
 - **ProjectAtlas** — the full scan result: projects + folders + detected frameworks. The `/api/projects` payload shape.
 - **Scanner** — the atlas-api module (`scanner.ts`) that walks `~/dev` and produces a ProjectAtlas. The source of truth for the Project shape.
 - **cache** — `.atlas-cache.json`, the persisted ProjectAtlas (60s TTL, stale-while-revalidate). atlas-picker reads it directly.
+- **scan config** — `.atlas-config.json` at the scan root: `maxDepth` (how deep the walk goes, default 3), `depth` (per-subtree limit, keyed by `relativePath` — also the only way to catalog a project that sits *inside* another project) `force` (`true` catalogs a folder the detectors ignored, `false` demotes one they got wrong and keeps walking through it) and `ignore` (glob patterns — a bare name matches at any depth and takes its subtree with it, a leading `/` anchors to the root; the walk skips those folders whole). Edited by hand or from the web console; per-project `.atlas` stays the place for everything about a project itself.
 - **Framework / Runner / GitStatus / DeployInfo** — the typed enums/structs on a Project. Names must match byte-for-byte across consumers (see `.claude/rules/shared-types.md`).
 - **flow** — a project's branch flow: `feature/*` → **integration** (`develop`) → **trunk** (`main`) → an annotated tag + GitHub release. No release branches. `Project.flow` carries the policy (`gitflow` opted in · `trunk` ours, not opted in yet · `external` someone else's repo · `local` no remote), the trunk and integration branch names, the owner of the **main repository** (origin), and a `drift` line when the current branch breaks the flow. Detected per repo; `.atlas` `flow` overrides it.
 - **action registry** — `shared/actions.json`: what project actions exist and when. Not "commands", not "buttons".
 - **daemon registry** — `shared/daemons.json`: the launchd daemons atlas displays/manages.
 - **consumer** — one of the three UIs reading the shared shapes: atlas-api, atlas-browser, atlas-picker.
+- **web console** — atlas-api's own UI, one shell over four routes — every route sits under the same nav band (`Nav.svelte`), which also carries the single theme toggle: `/` (projects, with host badges, `alsoOn` twins and the per-project settings dialog), `/system` (hosts, scanner config, daemons, port audit), `/templates`, `/claude-tree`.
 </vocabulary>
 
 ## Components
@@ -104,7 +107,9 @@ terminal (`view --up` = the chain towards the root only), and `atlas tree web [p
 `/claude-tree?root=…` — the cookiecutter `claude-tree`
 recipe is a thin `atlas tree web` alias. `atlas init` replaces the old `atlas-init` zsh function. `atlas info` prints what the scan
 knows about the folder you're in (`--json` for the raw `Project`).
-`atlas jump <query>` (aliased `pj`) cds the shell to the best match — no query opens the fuzzy
+`atlas jump <query>` (aliased `pj`) cds the shell to the best match — local projects always
+outrank remote twins, and a folder named exactly like the query (`pj framelink` → the workspace
+holding `app`/`auth`/`broker`) wins when no project carries that name itself — no query opens the fuzzy
 picker, and `--run <cmd>` runs a command there (`pj atlas --run bun test`); `atlas <query> --run
 <cmd>` is the same thing. It needs `shell/atlas.zsh` sourced — that wrapper evals what the CLI
 writes to `$ATLAS_SHELL_FILE`, since a child process can't cd its parent shell.
@@ -136,7 +141,7 @@ init [path]` opts one repo in — creates `develop`, renames `master` → `main`
 | `/api/projects` | GET | Main data endpoint (query: `?dir=`, `?includeArchived=true`) |
 | `/api/refresh` | POST | Force rescan. `?host=<id>` refreshes one remote host and waits for it; `?force=true` ignores the 10-min fragment TTL |
 | `/api/git` | POST | Batch git status (`{ paths: [] }`) |
-| `/api/run` | POST/DELETE | Spawn/kill dev server — `POST` persists the project's port to `.atlas` on first run and registers its Caddy dev hostnames, returning `{ port, url, local, remote }` |
+| `/api/run` | POST/DELETE | Spawn/kill dev server — `POST` watches what the spawned process group actually binds, persists *that* port to `.atlas`, and points the Caddy dev hostnames at it. Returns `{ port, url, log, local, remote }`, plus `exited: true` when the server died on startup |
 | `/api/hostnames` | GET | List registered dev hostnames (`{ slug, path, local, remote }[]`) from `.atlas-hostnames.json` |
 | `/api/hostnames` | POST/DELETE | Hostname-only assignment without spawning a server (`{ path }`): POST allocates or reuses the `.atlas` port and calls `ensureRoute`, 404 when the path is not in the cached scan; DELETE removes the route. Also called by `/api/rename` and `/api/move` for the old path. CLI: `atlas hostnames [assign\|rm] [path]` |
 | `/api/projects` | GET | (see above) also returns `hosts[]` — per-machine `status` / `scannedAt` / `projectCount` |
@@ -147,6 +152,9 @@ init [path]` opts one repo in — creates `develop`, renames `master` → `main`
 | `/api/rename` | POST | Rename project folder |
 | `/api/move` | POST | Move project folder |
 | `/api/agent-files` | GET/POST/PUT | CLAUDE.md and AGENTS.md operations |
+| `/api/atlas` | GET/PATCH | One project's `.atlas` overrides. `PATCH` merges; a `null` value clears a key |
+| `/api/config` | GET/PUT | The scanner's `.atlas-config.json` — `maxDepth`, per-subtree `depth`, `force`, `ignore` |
+| `/api/hosts` | GET/PUT | The host registry. A write reaches the file immediately and the running daemon only after `daemon:reload` (`restartRequired: true` says so) |
 | `/api/archive` | POST | Archive/unarchive project (`{ path, archived }`) |
 | `/api/beads` | POST | Create beads ticket via `bd create --silent` (`{ path, title, description?, priority?, issue_type?, labels? }`); 400 without a `.beads` db |
 | `/api/agent-log` | GET | Project's agent journal (`?path=`): visible events, active intent count, latest handoff — readonly open of `agent-log.sqlite`, empty payload for non-git/missing db |
@@ -228,6 +236,17 @@ Plists are edited by humans only. atlas-api never writes plists in v1.
 - **A health-probe timeout means busy, not dead** — `isUp()` counts only a refused connection as down, and `/api/projects` refreshes a stale cache in the background instead of serving it forever. Both cost a night of chasing a daemon that was up the whole time
 - **Pollers use `launchctl kickstart` without `-k`** — `-k` SIGKILLs a live-but-slow job; plain `kickstart` no-ops on a running one, and `KeepAlive` handles real crashes. `-k` is only for deliberate restarts (`daemon:reload`)
 - **Dev hostnames each cost two ACME certificates** — the NAS wildcard is `*.jurrejan.com` and does not reach `<slug>.atlas.local/remote.jurrejan.com`, so every `ensureRoute` issues two per-hostname certs and reloads the whole Caddyfile. Bulk registration needs a `*.atlas.local` / `*.atlas.remote` DNS-01 wildcard first (see `.orchestrate/report.md`, 2026-09-03)
+- **atlas follows the dev server's port, it never sets it** — an injected `--port/--host` reaches
+  only a single-process script that forwards its argv; a wrapper (`concurrently`, `turbo`) swallows
+  the flags silently and a config-pinned Vite ignores them, so the hostname pointed at a port
+  nothing was listening on. `/api/run` now polls `lsof -g <pgid>` (the spawn is `detached`, so the
+  whole tree shares the group), prefers a LAN-reachable bind — Caddy proxies from the NAS and can't
+  reach a loopback one — and writes what it finds back to `.atlas`
+- **A spawned dev server must never inherit the daemon's `PORT`/`HOST`** — the plist sets
+  `PORT=47891`, and anything honouring it (wrangler, next, nuxt, express) then aims at atlas-api's
+  own port: wrangler dies on the spot (`Unexpected server response: 101`) and `--kill-others` takes
+  its siblings with it. `/api/run` strips both and logs the child to `~/dev/.atlas-logs/<slug>.log`,
+  since `stdio: 'ignore'` made every such death invisible
 - **`/api/run` derives a project's running server from the OS, never from memory** — listeners
   on the project's port whose cwd is the project are stopped and waited for before every spawn
   (`stopProjectListeners`); an in-memory pid map died with each daemon restart and left the old
