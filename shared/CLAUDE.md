@@ -8,6 +8,7 @@ The single source of truth for things all three UI consumers (atlas-api, atlas-b
 - `daemons.json` — the **daemon registry**: which launchd daemons atlas displays/manages.
 - `templates.json` — the **template registry**: category folder → ordered list of suggested cookiecutter templates, used by `atlas new`.
 - `hosts.json` — the **host registry**: the machines atlas catalogs (`m2` primary, `fractal` satellite, `ubuntu` deploy), their roots, SSH aliases and scan-agent paths.
+- `services.json` — the **service registry**: permanent local web UIs that atlas-api gives a `<slug>.atlas.local` hostname (`$shared/services`). Consumed by atlas-api only; the CLI and web console read states through `/api/services`, so no browser/picker mirror.
 
 > **Exception to the three-consumer-sync rule:** `templates.json` / `templates.ts` are consumed **only** by atlas-api (`$shared/templates`) and atlas-cli (`atlas new`). Scaffolding is not a browser/picker concern, so the Rust + Raycast mirrors are intentionally absent — do **not** add `src/templates.rs` or a browser mirror to "stay in sync".
 
