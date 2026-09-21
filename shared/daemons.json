@@ -72,6 +72,28 @@
       }
     },
     {
+      "label": "com.jurrejan.atlas-disk-scan",
+      "name": "atlas disk: weekly scan",
+      "project": "/Users/jurrejan/dev/multi-stack/project-atlas/atlas-cli",
+      "plist": "/Users/jurrejan/dev/multi-stack/project-atlas/atlas-cli/launchd/com.jurrejan.atlas-disk-scan.plist",
+      "logs": {
+        "stdout": "~/Library/Logs/atlas-disk/launchd.scan.log",
+        "stderr": "~/Library/Logs/atlas-disk/launchd.scan.log"
+      },
+      "note": "Weekly calendar job (default Sun 10:00), not a server. Plist is generated from settings by `atlas disk schedule enable|set scan`; runs `atlas disk scan --scheduled --notify` via launchd/atlas-disk-job.sh (per-run logs ~/Library/Logs/atlas-disk/scan-*.log, 30 days)."
+    },
+    {
+      "label": "com.jurrejan.atlas-disk-trim",
+      "name": "atlas disk: weekly cache trim",
+      "project": "/Users/jurrejan/dev/multi-stack/project-atlas/atlas-cli",
+      "plist": "/Users/jurrejan/dev/multi-stack/project-atlas/atlas-cli/launchd/com.jurrejan.atlas-disk-trim.plist",
+      "logs": {
+        "stdout": "~/Library/Logs/atlas-disk/launchd.trim.log",
+        "stderr": "~/Library/Logs/atlas-disk/launchd.trim.log"
+      },
+      "note": "Weekly calendar job (default Sun 11:00), not a server. Plist is generated from settings by `atlas disk schedule enable|set trim`; runs `atlas disk trim --scheduled` via launchd/atlas-disk-job.sh (per-run logs ~/Library/Logs/atlas-disk/trim-*.log, 30 days). Replaces com.jurrejan.disk-autoclean — bootout that one before enabling this."
+    },
+    {
       "label": "com.activitywatch.watchdog",
       "name": "ActivityWatch Watchdog",
       "project": "/Users/jurrejan/Library/Scripts",
