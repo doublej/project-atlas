@@ -1,0 +1,8 @@
+{
+  "version": 1,
+  "services": [
+    { "slug": "atlas", "name": "Atlas console", "port": 47891, "daemon": "com.jurrejan.atlas-api" },
+    { "slug": "ports", "name": "Active Ports", "port": 47823 },
+    { "slug": "deckhand", "name": "Deckhand", "port": 4180, "daemon": "com.jurrejan.deckhand" }
+  ]
+}
