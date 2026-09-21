@@ -150,12 +150,27 @@ on the user's behalf. Some jobs also run on a schedule with nobody watching.
   it finish in the background.
 - **Switch colour theme** — `t` cycles the themes. Auto follows the terminal.
 
+### Use the web console
+- **Open the Disk page** — `/disk` in the atlas web console (`http://localhost:47891/disk`).
+  Tabs: Projects, Archives, Cleanup, Trim, Schedules, Log, Settings. The header shows free
+  space, the age of the analysis and the scan, and what `doctor` found.
+- **Same operations, same rules** — the page runs `atlas disk` for everything. Reads wait for
+  `--json`; changes run as a job whose output the page follows, with its own colours for
+  done, skipped, refused and failed. Cancel stops the job at its next safe point.
+- **Confirm in the page** — before a change the page shows the plan from a dry run (for
+  cleanup: each folder's contents and newest files). Saying yes runs the change with
+  `--confirmed`. A dirty or unpushed project needs its own tick (`--confirm-dirty`).
+  Whatever the approval policy refuses is still refused.
+- **Only from this Mac** — the page reads from anywhere the console is reachable, but changes
+  are refused (403) when the request came through the NAS proxy or another origin.
+- **The weekly warning opens it** — the notification's Review button opens the Cleanup tab.
+
 ### Automate it
 - **Machine-readable output** — every command can return its result in a structured form,
   for scripts and agents.
 - **Predictable exit results** — success, nothing to do, partly failed, and refused (a
   safety check failed or an approval was missing) each give a different exit result.
-- **Same operations everywhere** — everything the screen can do, a command can also do.
+- **Same operations everywhere** — everything the screen or the web console can do, a command can also do.
 
 ### Review and recover
 - **Read the operation log** — the user sees every archive, restore, deletion, trim and
@@ -269,4 +284,3 @@ item, reports why, and continues with the rest.
 - Archiving projects deeper than two levels, or in the skipped categories.
 - Whole-cache deletion, container cleanup, and toolchain uninstalls in scheduled jobs.
 - Unsaved changes in open editors. Only work that version control can see is flagged.
-- A web dashboard. The terminal screen and the commands are the interface.
