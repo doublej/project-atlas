@@ -6,4 +6,5 @@ atlas-api|Atlas API (SvelteKit)|atlas-api|bun|bun install|bun run dev|darwin,lin
 atlas-browser|Raycast Extension (Atlas Browser)|atlas-browser|bun,ray|bun install|bun run dev|darwin|atlas-api
 atlas-picker|CLI (Rust)|atlas-picker|cargo|cargo build|cargo run|darwin,linux|atlas-api
 atlas-cli|CLI (atlas command)|atlas-cli|bun|bun install && bun link|atlas help|darwin,linux|
+atlas-disk|Disk screen (Rust)|atlas-disk|cargo,just|just reinstall|atlas-disk|darwin|atlas-cli
 atlas-watchdog|Raycast Script Command|atlas-watchdog|lsof|chmod +x run-atlas-watchdog.sh|./run-atlas-watchdog.sh|darwin|atlas-api
