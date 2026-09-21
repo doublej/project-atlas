@@ -39,7 +39,7 @@ Canonical names — use these exact terms across all three consumers; they are t
 | **atlas-api** | `atlas-api/` | SvelteKit 2, Svelte 5, Bun | Backend API on port 47891 — scans `~/dev`, caches results, serves project metadata |
 | **atlas-browser** | `atlas-browser/` | Raycast extension, React, TS | Raycast UI for browsing/filtering/acting on projects |
 | **atlas-picker** | `atlas-picker/` | Rust, iocraft, Nucleo | TUI fuzzy picker that reads from the API cache file directly |
-| **atlas-cli** | `atlas-cli/` | Bun, TS | Global **`atlas`** command — thin client to the API (`tree`/`info`/`init`/`new`/`scan`/`open`/`jump`/`pick`/`ports`/`flow`/`agent-log`/`prime`). Replaces per-project justfile recipes; `atlas new` is the scaffolding front door. `atlas prime` briefs a session (wired as a global SessionStart hook; `atlas agent-log session-end` as SessionEnd) |
+| **atlas-cli** | `atlas-cli/` | Bun, TS | Global **`atlas`** command — thin client to the API (`tree`/`info`/`init`/`new`/`scan`/`open`/`jump`/`pick`/`ports`/`flow`/`agent-log`/`prime`/`brief`). Replaces per-project justfile recipes; `atlas new` is the scaffolding front door. `atlas prime` is the agent crash course (top of `atlas help`); `atlas brief` briefs a session (wired as a global SessionStart hook; `atlas agent-log session-end` as SessionEnd) |
 | **atlas-watchdog** | `atlas-watchdog/` | Bash (Raycast script cmd) | Inline status monitor — polls `/api/health`, restarts via `launchctl kickstart com.jurrejan.atlas-api` (never `-k`) |
 | **atlas-browser Daemons** | `atlas-browser/src/daemons.tsx` | Raycast command | View/restart launchd daemons via the `/api/daemons` endpoints; reads `shared/daemons.json` |
 
