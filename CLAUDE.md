@@ -33,7 +33,7 @@ Canonical names — use these exact terms across all three consumers; they are t
 - **action registry** — `shared/actions.json`: what project actions exist and when. Not "commands", not "buttons".
 - **daemon registry** — `shared/daemons.json`: the launchd daemons atlas displays/manages.
 - **consumer** — one of the three UIs reading the shared shapes: atlas-api, atlas-browser, atlas-picker.
-- **web console** — atlas-api's own UI, one shell over six routes — every route sits under the same nav band (`Nav.svelte`), which also carries the single theme toggle: `/` (projects, with host badges, `alsoOn` twins and the per-project settings dialog), `/ports` (every listener on the Mac grouped by owner — project, service, docker, system — with select-and-kill; the Active Ports dashboard, folded in), `/system` (hosts, scanner config, daemons, services, port audit), `/templates`, `/claude-tree`, `/disk` (every `atlas disk` operation — reads through `--json`, changes as jobs the page follows; writes only from this Mac).
+- **web console** — atlas-api's own UI, one shell over six routes — every route sits under the same nav band (`Nav.svelte`), which also carries the single theme toggle: `/` (projects, with host badges, `alsoOn` twins and the per-project settings dialog), `/ports` (every listener on the Mac grouped by owner — project, service, docker, system — with select-and-kill; the Active Ports dashboard, folded in), `/system` (hosts, scanner config, daemons, services, port audit), `/templates`, `/claude-tree`, `/disk` (every `atlas disk` operation — reads through `--json`, changes as jobs the page follows; writes only from this Mac or `atlas.atlas.local`).
 </vocabulary>
 
 ## Components
@@ -174,7 +174,7 @@ init [path]` opts one repo in — creates `develop`, renames `master` → `main`
 | `/api/disk/read` | GET | `?cmd=<sub>&arg=…` → `atlas disk <sub> … --json`, side-effect-free commands only (cached reads, listings, status, dry-runs) |
 | `/api/disk/jobs` | GET/POST | List recent jobs / start one (`{ command, args }`, allowlisted, run `--confirmed`) as a detached `atlas disk job` writing `<ATLAS_DISK_HOME>/jobs/<id>.log` |
 | `/api/disk/jobs/:id` | GET/DELETE | Poll a job's log from `?offset=` (whole lines) and its exit / cancel it (SIGINT to its group) |
-| `/api/disk/config` · `/api/disk/schedule` | PUT · POST | `config set` per changed key · `schedule enable\|disable\|set`. Every `/api/disk` write is 403 through the NAS proxy (`x-forwarded-for`), a non-loopback Host or a foreign Origin |
+| `/api/disk/config` · `/api/disk/schedule` | PUT · POST | `config set` per changed key · `schedule enable\|disable\|set`. Every `/api/disk` write is 403 unless it comes from loopback or through the NAS proxy on `atlas.atlas.local` (`x-forwarded-host`), and from a matching Origin |
 | `/api/ports/audit` | GET | Report-only port-collision check across daemons + scanned projects (`{ collisions, unmanaged }`) — never writes |
 
 ### Multi-host catalog
