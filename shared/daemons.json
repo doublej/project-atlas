@@ -302,6 +302,17 @@
         "stderr": "~/Library/Logs/pimpelmees-theme-linear-sync.log"
       },
       "note": "Two-way Linear PIM <-> theme beads (pmt), every 15 min via `just linear-sync`"
+    },
+    {
+      "label": "com.jurrejan.snail-mail",
+      "name": "Snail Mail server",
+      "port": 8787,
+      "project": "/Users/jurrejan/dev/multi-stack/snail-mail",
+      "plist": "/Users/jurrejan/dev/multi-stack/snail-mail/launchd/com.jurrejan.snail-mail.plist",
+      "logs": {
+        "stdout": "~/Library/Logs/snail-mail.log",
+        "stderr": "~/Library/Logs/snail-mail.err.log"
+      }
     }
   ]
 }
