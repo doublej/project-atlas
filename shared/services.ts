@@ -9,6 +9,9 @@ export interface ServiceDef {
 	daemon?: string;
 	/** Also publish `<slug>.atlas.remote` behind the shared password. Off unless set. */
 	remote?: boolean;
+	/** A short LAN name served next to `<slug>.atlas.local`, e.g. `atlas.jurrejan.com`. One label
+	 *  under `jurrejan.com`, so the NAS's `*.jurrejan.com` wildcard cert covers it (no new ACME cert). */
+	host?: string;
 }
 
 export interface ServiceRegistry {
