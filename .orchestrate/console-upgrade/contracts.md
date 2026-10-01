@@ -49,12 +49,12 @@ type DriftItem = {
 ```
 
 - `GET /api/hostnames/check?slug=&path=` → `{ slug, status: 'free'|'current'|'taken'|'invalid', reason?, holder?: Holder, local, remote }`.
-  `current` = the slug already belongs to `path`. Always 200; the status carries the verdict.
+  `current` = the slug already belongs to `path`. 200 with the verdict in `status`; 400 for a `path` outside the catalog.
 - `PATCH /api/atlas` (existing, `null` clears) — `slug` must be a DNS label (1–63 of [a-z0-9-], no edge
   hyphen) → 400 `{error}`; a taken slug → 409 `{ error: 'slug "x" is taken by <project|service> <name> (<path>)', holder }`;
   `port` must be an integer 1024–65535 → 400. A slug/port/devPublic change on a project that has a
   route calls `moveRoute`/`ensureRoute`; the response is `{ atlas, hostname?: HostnameState }`.
-- `GET /api/hostnames` (existing rows) gains `nasSynced` and `state`.
+- `GET /api/hostnames` (existing rows) gains `nasSynced` and `state`, and lists only rows the NAS serves; `?all=1` adds failed and release-pending ones (the settings dialog asks for them).
 - `POST /api/hostnames { path }` (existing assign) → `HostnameState` (+ existing fields); 409 with holder on a clash (never "NAS push failed" for a clash).
 - `DELETE /api/hostnames { path }` → release; if the NAS removal fails the row stays with `nasSynced:false` and the call answers 502 `{error}`.
 - `GET /api/hostnames/status?slug=` → `HostnameState` (server-side tracker that polls `https://<local>` after an assign / slug change: syncing → issuing → live | failed).

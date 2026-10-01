@@ -37,6 +37,6 @@ suno-preview 47895, suno-feedback 47894, aw-server 5600 (ActivityWatch), consult
 19876/19877, Python 8931/8813/47900, bun 42000/42250/42480/9347.
 
 ## Known limits of Phase 1 to keep in mind
-- A bridge only follows a service to its loopback bind on `127.0.0.1`; a service bound to `[::1]`
-  only would need an IPv6 upstream.
+- A bridge dials `localhost`, which reaches a loopback bind on `127.0.0.1` or `[::1]` (Vite 8's
+  default) alike (`dialLoopback` in `services.ts`).
 - A `down` service keeps whatever route it had; the hostname 502s until it returns.
