@@ -1,0 +1,50 @@
+# Same method as baseline-timings.txt (curl time_total size_download), daemon build. Other sessions held the load at 96-112.
+# after, 2026-10-01 18:25, 6c831fd, load  96,33 64,54 67,85 
+/ 0.088899 461976
+/ 0.050904 461976
+/ 0.043113 461976
+processes-fresh 0.240563 72110
+processes-fresh 0.106992 73888
+processes-fresh 0.177291 73890
+processes-warm 0.071458 73890
+processes-warm 0.020082 73890
+processes-warm 0.026354 73890
+listeners-fresh 1.016483 10118
+listeners-fresh 0.351044 10118
+listeners-fresh 5.374267 28
+listeners-warm 0.564492 10118
+listeners-warm 0.022905 10118
+listeners-warm 0.019256 10118
+/ports 0.029943 63299
+/processes 0.042043 215311
+/system 0.152076 49016
+/disk 0.679567 184630
+/claude-tree 0.030241 1103
+/templates 0.335089 159423
+NAS / (Accept-Encoding: zstd, gzip) 0.372464 59409
+NAS / uncompressed 0.166613 461976
+
+# after, 2026-10-01 18:28, 735a45c, load  111,92 75,28 70,90 
+/ 0.257081 461976
+/ 1.328054 461976
+/ 0.598482 461976
+processes-fresh 0.432669 66174
+processes-fresh 0.660685 68990
+processes-fresh 0.401679 68858
+processes-warm 0.032000 68858
+processes-warm 0.055894 68858
+processes-warm 0.042906 68858
+listeners-fresh 0.666764 9253
+listeners-fresh 0.357728 9253
+listeners-fresh 0.578520 9253
+listeners-warm 0.032531 9253
+listeners-warm 0.024570 9253
+listeners-warm 0.027799 9253
+/ports 0.056479 59813
+/processes 0.053473 197747
+/system 0.120612 49029
+/disk 0.383280 184633
+/claude-tree 0.023094 1104
+/templates 0.384015 159424
+NAS / (Accept-Encoding: zstd, gzip) 0.290062 59410
+NAS / uncompressed 0.311354 461976
