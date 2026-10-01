@@ -5,13 +5,13 @@ Branch `feature/console-upgrade` in project-atlas, atlas-api, atlas-cli. Decisio
 Evidence per line: a command + result, or a file:line. Baseline timings: `.orchestrate/console-upgrade/baseline-timings.txt`.
 
 ## 1 · Consistent, modular console
-- [ ] 1.1 one client fetch helper (checks `res.ok`, surfaces `{error}`) replaces browser/api.ts:7, disk-client.svelte.ts:16, claude-tree/+page.svelte:228
-- [ ] 1.2 one `errorMessage` in src/lib replaces system/+page.server.ts:19, ScannerSection:24, DaemonsSection:34, HostsSection:39
-- [ ] 1.3 one `tildify` in src/lib replaces ports/+page.svelte:56, disk-client:108, DiskArchiveModal:44
-- [ ] 1.4 `ConfirmDialog` on Modal replaces native `confirm()` in ports and claude-tree
+- [x] 1.1 one client fetch helper (checks `res.ok`, surfaces `{error}`) replaces browser/api.ts:7, disk-client.svelte.ts:16, claude-tree/+page.svelte:228 — ✓ src/lib/http.ts + http.test.ts (5 tests); grep: no raw client fetch( left outside ProjectSettings (W34) — bb59f84
+- [x] 1.2 one `errorMessage` in src/lib replaces system/+page.server.ts:19, ScannerSection:24, DaemonsSection:34, HostsSection:39 — ✓ src/lib/format.ts errorMessage + format.test.ts; 13 copies replaced (bb59f84, 2281e1a)
+- [x] 1.3 one `tildify` in src/lib replaces ports/+page.svelte:56, disk-client:108, DiskArchiveModal:44 — ✓ src/lib/format.ts tildify (tested incl. real homedir); 4 copies replaced — bb59f84
+- [x] 1.4 `ConfirmDialog` on Modal replaces native `confirm()` in ports and claude-tree — ✓ components/feedback/ConfirmDialog.svelte; grep "confirm(" finds no native call — 30c4bff, f64f907
 - [ ] 1.5 `Table` (sticky header, table-sort, row selection, keyboard focus) replaces table CSS in ports, DaemonsSection, disk.css, ProjectTable
-- [ ] 1.6 one `Selection` model (disk-client vs ports plain-click disagreement resolved)
-- [ ] 1.7 one sidebar tab nav replaces system/+page.svelte:56-136 and disk/+page.svelte:83-172
+- [x] 1.6 one `Selection` model (disk-client vs ports plain-click disagreement resolved) — ✓ src/lib/selection.svelte.ts + 5 tests; rule = Finder (plain click selects one, cmd toggles, shift range) — febbe62
+- [x] 1.7 one sidebar tab nav replaces system/+page.svelte:56-136 and disk/+page.svelte:83-172 — ✓ components/SideNav.svelte on /system and /disk; horizontal scroller <768px — 8d31c82, cd45e26
 - [ ] 1.8 `Notice` for page state + one toast for action results; seven `.err` classes, `.failures` lists and claude-tree's toast gone
 - [ ] 1.9 same loading / empty / error states on every page
 - [ ] 1.10 claude-tree/+page.svelte split into components + tested logic modules on the ui primitives
@@ -21,8 +21,8 @@ Evidence per line: a command + result, or a file:line. Baseline timings: `.orche
 - [ ] 1.14 no new colours, fonts or visual language (existing tokens + primitives only)
 
 ## 2 · Write guard and off-LAN access
-- [ ] 2.1 one guard in hooks.server.ts on every non-GET /api/*: loopback passes · trusted LAN host + matching Origin passes · off-LAN per decision 1 · else 403 with reason
-- [ ] 2.2 /api/iterm and /api/finder loopback/LAN only
+- [x] 2.1 one guard in hooks.server.ts on every non-GET /api/*: loopback passes · trusted LAN host + matching Origin passes · off-LAN per decision 1 · else 403 with reason — ✓ src/lib/guard.ts refusal() + hooks.server.ts handle; guard.test.ts table (CLI/Raycast/picker/console/LAN/off-LAN/CSRF/rebinding); curl cases on a test instance — merge c4040aa
+- [x] 2.2 /api/iterm and /api/finder loopback/LAN only — ✓ guard.ts LOCAL_ONLY: iterm, finder (every method); requireLocalRequest deleted — 6633a7c
 - [ ] 2.3 one real call each still works: CLI · Raycast extension · atlas-picker
 - [ ] 2.4 decision 1 applied: atlas.atlas.remote.jurrejan.com behind the Caddy password, read-only
 - [ ] 2.5 project list, ports and processes usable at 390px
@@ -86,7 +86,7 @@ Evidence per line: a command + result, or a file:line. Baseline timings: `.orche
 - [ ] 6.12 agent-friendly-cli score before and after
 
 ## Contract
-- [ ] C.1 /api/processes response shape fixed before 5 and 6 split
+- [x] C.1 /api/processes response shape fixed before 5 and 6 split — ✓ atlas-api/src/lib/processes/types.ts (24aa846) + .orchestrate/console-upgrade/contracts.md
 
 ## Done when
 - [ ] D.1 gates: atlas-api `just check` + `bunx vitest run`; atlas-cli `bun run check` + `bun test`; atlas-picker `just reinstall` only if project.rs changed
@@ -96,3 +96,8 @@ Evidence per line: a command + result, or a file:line. Baseline timings: `.orche
 - [ ] D.5 report .orchestrate/report-2026-10-01-console-upgrade.md (timing table, both CLI scores; Blocked on me / Changed / Found)
 
 ## Found along the way
+- [x] F.1 `just check` failed on main before any change (biome followed the tracked .claude/worktrees/shared symlink + 4 lint errors) — fixed ffb8bcf
+- [ ] F.2 plain `bun run build` crashes with SIGTRAP on this Mac (Bun 1.3.8 / Darwin 27); `RAYON_NUM_THREADS=1 bun run build` works — check daemon:reload
+- [ ] F.3 CLI: piped stdout over 64KB is truncated (static @inquirer/prompts import makes stdout non-blocking) — W6
+- [ ] F.4 process argv carries secrets (mcp-remote Bearer, DECKHAND_TOKEN) and /api/ports/listeners returned them — redaction in W5
+- [x] F.5 scan() re-parsed the 600KB cache per caller — memoized by mtime+size (c9992a9, scanner-cache.test.ts)
