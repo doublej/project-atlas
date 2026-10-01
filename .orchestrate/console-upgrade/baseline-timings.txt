@@ -1,0 +1,16 @@
+# Baseline, 2026-10-01 ~12:40, main @ 833c883, daemon build, curl -s -o /dev/null -w '%{time_total} %{size_download}'
+/ 0.977278 1453831
+/ 0.171520 1453831
+/ 0.209630 1453831
+listeners-fresh 0.282207 6709
+listeners-fresh 0.244399 6709
+listeners-fresh 0.236484 6709
+listeners-warm 0.021925 6709
+listeners-warm 0.021317 6709
+listeners-warm 0.011434 6709
+/ports 0.012391 8949
+/system 0.804794 49458
+/disk 0.364890 174057
+/claude-tree 0.020323 1104
+/templates 0.079549 158197
+gzip / (Accept-Encoding: gzip) 0.427092 1453831   # no compression served
