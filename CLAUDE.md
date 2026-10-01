@@ -146,19 +146,22 @@ init [path]` opts one repo in — creates `develop`, renames `master` → `main`
 | `/api/projects` | GET | Main data endpoint (query: `?dir=`, `?includeArchived=true`) |
 | `/api/refresh` | POST | Force rescan. `?host=<id>` refreshes one remote host and waits for it; `?force=true` ignores the 10-min fragment TTL |
 | `/api/git` | POST | Batch git status (`{ paths: [] }`) |
-| `/api/run` | POST/DELETE | Spawn/kill dev server — `POST` watches what the spawned process group actually binds, persists *that* port to `.atlas`, and points the Caddy dev hostnames at it. Returns `{ port, url, log, local, remote }`, plus `exited: true` when the server died on startup |
-| `/api/hostnames` | GET | List registered dev hostnames (`{ slug, path, local, remote }[]`) from `.atlas-hostnames.json` |
-| `/api/hostnames` | POST/DELETE | Hostname-only assignment without spawning a server (`{ path }`): POST allocates or reuses the `.atlas` port and calls `ensureRoute`, 404 when the path is not in the cached scan; DELETE removes the route. Also called by `/api/rename` and `/api/move` for the old path. CLI: `atlas hostnames [assign\|rm] [path]` |
+| `/api/run` | POST/DELETE | Spawn/kill dev server — `POST` watches what the spawned process group actually binds, persists *that* port to `.atlas`, and points the Caddy dev hostnames at it. Returns `{ port, url, log, local, remote }`, plus `exited: true` when the server died on startup. 409 `{ error, holder }` before spawning when another project or a service holds the slug |
+| `/api/hostnames` | GET | List registered dev hostnames (`{ slug, path, local, remote, state, nasSynced }[]`) from `.atlas-hostnames.json` |
+| `/api/hostnames` | POST/DELETE | Hostname-only assignment without spawning a server (`{ path }`): POST allocates or reuses the `.atlas` port and calls `ensureRoute`, 404 when the path is not in the cached scan; DELETE removes the route — a removal the NAS didn't take keeps the row `nasSynced:false` and answers 502. A slug clash is 409 `{ error, holder }`. CLI: `atlas hostnames [assign\|rm] [path]` |
+| `/api/hostnames/check` | GET | `?slug=&path=` → `{ slug, status: free\|current\|taken\|invalid, reason?, holder?, local, remote }`, always 200; without `path` nobody claims the slug (never `current`) |
+| `/api/hostnames/status` · `/retry` · `/port` | GET · POST · GET | `?slug=` → `HostnameState` (syncing → issuing → live \| failed) · `{ slug }` re-pushes an unsynced row or finishes a release · `?port=` → `{ port, listening, lanReachable }` |
+| `/api/hostnames/doctor` | GET/POST | Drift between registry rows, projects, services and the NAS (`{ checkedAt, items }`); POST `{ ids? }` applies the fixes. The `/system` Hostnames tab |
 | `/api/services` | GET/POST | Service hostname states (`{ slug, name, port, mode, bridged, local, error? }`); POST syncs now instead of waiting for the 60s tick. CLI: `atlas services [sync]` |
 | `/api/projects` | GET | (see above) also returns `hosts[]` — per-machine `status` / `scannedAt` / `projectCount` |
 | `/api/readme` | POST | Lazy README load |
 | `/api/description` | PUT | Update project description |
 | `/api/iterm` | POST | Open iTerm via AppleScript |
 | `/api/finder` | POST | Open Finder |
-| `/api/rename` | POST | Rename project folder |
-| `/api/move` | POST | Move project folder |
+| `/api/rename` | POST | Rename project folder; its dev hostname follows (`hostname?` in the response), a slug clash is 409 before the move |
+| `/api/move` | POST | Move project folder; same hostname handling as rename |
 | `/api/agent-files` | GET/POST/PUT | CLAUDE.md and AGENTS.md operations |
-| `/api/atlas` | GET/PATCH | One project's `.atlas` overrides. `PATCH` merges; a `null` value clears a key |
+| `/api/atlas` | GET/PATCH | One project's `.atlas` overrides. `PATCH` merges; a `null` value clears a key. A slug that is no DNS label or a port outside 1024–65535 is 400, a taken slug 409 (checked before the write); a slug/port/devPublic change moves the route and answers `{ path, atlas, hostname? }` |
 | `/api/config` | GET/PUT | The scanner's `.atlas-config.json` — `maxDepth`, per-subtree `depth`, `force`, `ignore` |
 | `/api/hosts` | GET/PUT | The host registry. A write reaches the file immediately and the running daemon only after `daemon:reload` (`restartRequired: true` says so) |
 | `/api/archive` | POST | Archive/unarchive project (`{ path, archived }`) |
@@ -247,7 +250,7 @@ Plists are edited by humans only. atlas-api never writes plists in v1.
 - **Liveness is `GET /api/health`, never `/`** — the root page is the heaviest route and a UI 500 must not read as "API dead"
 - **A health-probe timeout means busy, not dead** — `isUp()` counts only a refused connection as down, and `/api/projects` refreshes a stale cache in the background instead of serving it forever. Both cost a night of chasing a daemon that was up the whole time
 - **Pollers use `launchctl kickstart` without `-k`** — `-k` SIGKILLs a live-but-slow job; plain `kickstart` no-ops on a running one, and `KeepAlive` handles real crashes. `-k` is only for deliberate restarts (`daemon:reload`)
-- **Dev hostnames each cost two ACME certificates** — the NAS wildcard is `*.jurrejan.com` and does not reach `<slug>.atlas.local/remote.jurrejan.com`, so every `ensureRoute` issues two per-hostname certs and reloads the whole Caddyfile. Bulk registration needs a `*.atlas.local` / `*.atlas.remote` DNS-01 wildcard first (see `.orchestrate/report.md`, 2026-09-03)
+- **Dev hostnames cost no certificate since 2026-10-01** — the NAS serves `*.atlas.local.jurrejan.com` and `*.atlas.remote.jurrejan.com` from one DNS-01 wildcard (`sites/atlas-wildcard.caddy`), so a push is a site file plus a `caddy validate` + reload of the shared Caddy. If the wildcard file goes, every `ensureRoute` issues two per-hostname certs again; the hostname doctor reports that as `wildcard-missing`
 - **atlas follows the dev server's port, it never sets it** — an injected `--port/--host` reaches
   only a single-process script that forwards its argv; a wrapper (`concurrently`, `turbo`) swallows
   the flags silently and a config-pinned Vite ignores them, so the hostname pointed at a port
