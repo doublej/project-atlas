@@ -313,6 +313,38 @@
         "stdout": "~/Library/Logs/snail-mail.log",
         "stderr": "~/Library/Logs/snail-mail.err.log"
       }
+    },
+    {
+      "label": "com.hyndsyght.tray",
+      "name": "hyndsyght tray",
+      "project": "/Users/jurrejan/dev/python/hyndsyght",
+      "plist": "/Users/jurrejan/dev/python/hyndsyght/launchd/com.hyndsyght.tray.plist",
+      "logs": {
+        "stdout": "~/Library/Logs/hyndsyght/tray.out.log",
+        "stderr": "~/Library/Logs/hyndsyght/tray.err.log"
+      }
+    },
+    {
+      "label": "com.jurrejan.vamctl-api",
+      "name": "vamctl API",
+      "port": 4125,
+      "project": "/Users/jurrejan/dev/multi-stack/vamctl/vamctl-api",
+      "plist": "/Users/jurrejan/dev/multi-stack/vamctl/vamctl-api/launchd/com.jurrejan.vamctl-api.plist",
+      "logs": {
+        "stdout": "/tmp/vamctl-api.log",
+        "stderr": "/tmp/vamctl-api.error.log"
+      }
+    },
+    {
+      "label": "com.jurrejan.vamctl-web",
+      "name": "vamctl web UI",
+      "port": 4128,
+      "project": "/Users/jurrejan/dev/multi-stack/vamctl/vamctl-web",
+      "plist": "/Users/jurrejan/dev/multi-stack/vamctl/vamctl-web/launchd/com.jurrejan.vamctl-web.plist",
+      "logs": {
+        "stdout": "/tmp/vamctl-web.log",
+        "stderr": "/tmp/vamctl-web.error.log"
+      }
     }
   ]
 }
