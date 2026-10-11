@@ -345,6 +345,15 @@
         "stdout": "/tmp/vamctl-web.log",
         "stderr": "/tmp/vamctl-web.error.log"
       }
+    },
+    {
+      "label": "com.jurrejan.stream-clipboard",
+      "name": "Stream Clipboard",
+      "project": "/Users/jurrejan/dev/_management/tools/stream-clipboard",
+      "plist": "/Users/jurrejan/dev/_management/tools/stream-clipboard/launchd/com.jurrejan.stream-clipboard.plist",
+      "logs": {
+        "stderr": "/tmp/stream-clipboard.err"
+      }
     }
   ]
 }
