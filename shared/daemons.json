@@ -301,7 +301,8 @@
         "stdout": "~/Library/Logs/pimpelmees-theme-linear-sync.log",
         "stderr": "~/Library/Logs/pimpelmees-theme-linear-sync.log"
       },
-      "note": "Two-way Linear PIM <-> theme beads (pmt), every 15 min via `just linear-sync`"
+      "note": "Two-way Linear PIM <-> theme beads (pmt), every 15 min via `just linear-sync`",
+      "disabled": "2026-10-14: launchctl disable — pushed stale bead status over a Linear Done (PIM-52 Done -> Todo); re-enable with launchctl enable gui/501/com.jurrejan.pimpelmees-theme-linear-sync + bootstrap"
     },
     {
       "label": "com.jurrejan.snail-mail",
