@@ -355,6 +355,28 @@
       "logs": {
         "stderr": "/tmp/stream-clipboard.err"
       }
+    },
+    {
+      "label": "com.jurrejan.iterm-groups",
+      "name": "iTerm groups",
+      "project": "/Users/jurrejan/dev/_management/dotfiles",
+      "plist": "/Users/jurrejan/dev/_management/dotfiles/launchd/com.jurrejan.iterm-groups.plist",
+      "logs": {
+        "stdout": "~/Library/Logs/iterm-groups.log",
+        "stderr": "~/Library/Logs/iterm-groups.log"
+      },
+      "note": "Keeps iTerm tab groups and tmux window @group/@group_color in step (deckhand reads the same options)"
+    },
+    {
+      "label": "com.jurrejan.iterm-statusvars",
+      "name": "iTerm status vars",
+      "project": "/Users/jurrejan/dev/_management/dotfiles",
+      "plist": "/Users/jurrejan/dev/_management/dotfiles/launchd/com.jurrejan.iterm-statusvars.plist",
+      "logs": {
+        "stdout": "~/Library/Logs/iterm-statusvars.log",
+        "stderr": "~/Library/Logs/iterm-statusvars.log"
+      },
+      "note": "Publishes the tmux status feed per data point as iTerm variables for the tmux profile's status bar"
     }
   ]
 }
