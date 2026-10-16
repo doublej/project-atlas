@@ -223,15 +223,15 @@
       "notes": "SSH tunnel to the binwatch viewer on ubuntu-server (loopback only, unauthenticated behind it)"
     },
     {
-      "label": "com.binwatch.popup",
-      "name": "binwatch popup",
+      "label": "com.binwatch.mac",
+      "name": "binwatch live view",
       "project": "/Users/jurrejan/dev/python/binwatch",
-      "plist": "/Users/jurrejan/dev/python/binwatch/launchd/com.binwatch.popup.plist",
+      "plist": "/Users/jurrejan/dev/python/binwatch/launchd/com.binwatch.mac.plist",
       "logs": {
-        "stdout": "/tmp/binwatch-popup.log",
-        "stderr": "/tmp/binwatch-popup.log"
+        "stdout": "/tmp/binwatch-mac.log",
+        "stderr": "/tmp/binwatch-mac.log"
       },
-      "notes": "Opens an always-on-top live view when someone is at the waste containers. LaunchAgent, not a daemon: it needs the login session to draw a window."
+      "notes": "Native menu-bar app (binwatch mac/): holds the viewer's HD /live.mp4 and /live/events open over the LAN and shows an always-on-top live view when someone is at the waste containers. Replaced com.binwatch.popup."
     },
     {
       "label": "com.jurrejan.dock-unfreeze",
