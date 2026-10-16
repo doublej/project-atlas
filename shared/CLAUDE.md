@@ -14,7 +14,8 @@ never how, `selfManaged`, humans-only plists, no IPs) are in the root `../CLAUDE
   scan-agent paths. `ssh: null` marks the primary host, the one machine atlas may write to.
 - `services.json` — the **service registry**: permanent local web UIs that get a
   `<slug>.atlas.local` hostname. atlas-api only (`$shared/services`); everyone else reads
-  `/api/services`.
+  `/api/services`. `remote: true` puts a service on `atlas.remote` — atlas-api
+  carries shell-exec routes, so never set it without the service password in front.
 
 ## How each consumer imports it
 
