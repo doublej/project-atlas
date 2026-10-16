@@ -377,6 +377,17 @@
         "stderr": "~/Library/Logs/iterm-statusvars.log"
       },
       "note": "Publishes the tmux status feed per data point as iTerm variables for the tmux profile's status bar"
+    },
+    {
+      "label": "com.jurrejan.iterm-prefs",
+      "name": "iTerm prefs snapshot",
+      "project": "/Users/jurrejan/dev/_management/dotfiles",
+      "plist": "/Users/jurrejan/dev/_management/dotfiles/launchd/com.jurrejan.iterm-prefs.plist",
+      "logs": {
+        "stdout": "~/Library/Logs/iterm-prefs.log",
+        "stderr": "~/Library/Logs/iterm-prefs.log"
+      },
+      "note": "WatchPaths job, not a server: re-exports iTerm's prefs and snippets into dotfiles os/darwin/iterm2/ when they change (throttled to once a minute)"
     }
   ]
 }
