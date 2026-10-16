@@ -7,8 +7,7 @@ never how, `selfManaged`, humans-only plists, no IPs) are in the root `../CLAUDE
 
 - `actions.json` — the **action registry**: what project actions exist, when they apply, which
   consumers show them.
-- `daemons.json` — the **daemon registry**: launchd daemons atlas displays/manages (`label`,
-  `name`, optional `port`/`project`/`plist`/`logs`/`selfManaged`).
+- `daemons.json` — the **daemon registry**: launchd daemons atlas displays/manages.
 - `templates.json` — the **template registry**: category folder → ordered suggested cookiecutter
   templates, for `atlas new`.
 - `hosts.json` — the **host registry**: machines atlas catalogs, their roots, SSH aliases and
@@ -17,13 +16,9 @@ never how, `selfManaged`, humans-only plists, no IPs) are in the root `../CLAUDE
   `<slug>.atlas.local` hostname. atlas-api only (`$shared/services`); everyone else reads
   `/api/services`.
 
-The `.ts` files (`actions.ts`, `daemons.ts`, `hosts.ts`) are types + helpers over the JSON for the
-TS consumers. The Rust consumer re-declares equivalent types and reads the JSON directly.
-
 ## How each consumer imports it
 
-- **atlas-api** — `$shared/actions`, `$shared/daemons`, `$shared/hosts`, … aliases
-  (`svelte.config.js`).
+- **atlas-api** — the `$shared` alias (`svelte.config.js`) over the `.ts` helpers.
 - **atlas-browser** — the compiled JS (`../../shared/actions.js`); TS types mirrored in
   `src/action-registry.ts`.
 - **atlas-picker** — `include_str!("../../shared/actions.json")` at compile time; Rust types in
@@ -59,7 +54,7 @@ TS consumers. The Rust consumer re-declares equivalent types and reads the JSON 
 - **New action:** add an entry to `actions.json` (`group`, `icon`, optional
   `condition`/`consumers`); extend `ActionDef` in `actions.ts` only for a new field; mirror in
   `src/action-registry.ts` (browser) and `src/actions.rs` (picker) as needed.
-- **New daemon:** add an entry to `daemons.json`. No helper code change.
+- **New daemon:** an entry in `daemons.json` (`label`, `name`, optional `port`/`project`/`plist`/`logs`/`selfManaged`); no code change.
 
 ## Verification
 

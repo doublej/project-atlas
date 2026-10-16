@@ -6,22 +6,13 @@ Raycast extension, a Rust TUI and the global `atlas` CLI consume it. Each compon
 repo with its own `CLAUDE.md`.
 
 <vocabulary>
-Canonical terms, used byte-for-byte across all consumers. Full definitions: docs/glossary.md.
+Canonical terms, byte-for-byte across all consumers. Full definitions: docs/glossary.md.
 
-- **Project** — one scanned development folder; the core record. **ProjectAtlas** — the full scan result (projects + folders + frameworks), the `/api/projects` shape.
-- **Scanner** — `atlas-api/src/lib/scanner.ts`, source of truth for the Project shape. **cache** — `~/dev/.atlas-cache.json` (60s TTL, stale-while-revalidate); atlas-picker reads it directly.
-- **scan config** — `.atlas-config.json` at the scan root: `maxDepth`, per-subtree `depth`, `force`, `ignore`. Per-project overrides live in that project's `.atlas`.
-- **slug** — kebab-case DNS label from the folder name (`.atlas` `slug` overrides). **dev hostname** — `<slug>.atlas.local.jurrejan.com` (LAN) / `<slug>.atlas.remote.jurrejan.com` (password-gated WAN), pushed to the NAS Caddy by `atlas-api/src/lib/caddyDev.ts`.
-- **host** — a catalogued machine from `shared/hosts.json`: `m2` (this Mac, **primary**), `fractal` (satellite), `ubuntu` (deploy). Machine axis; `remote` in a hostname is the reachability axis.
-- **isLocal** — present only on the primary host's projects; its absence hides every filesystem/GUI action. **alsoOn** — the same project on another machine, by exact name match.
-- **service** — a permanent local web UI (atlas console, deckhand) given a dev hostname without being a project (`atlas-api/src/lib/services.ts`).
-- **scan agent** — the bundled scanner shipped to remote hosts by `atlas hosts sync`; `--json` prints a ProjectAtlas and writes nothing.
-- **registries** (all in `shared/`): **action registry** `actions.json` (not "commands"/"buttons"), **daemon registry** `daemons.json`, **host registry** `hosts.json`, **service registry** `services.json`, template registry `templates.json`.
-- **consumer** — atlas-api, atlas-browser or atlas-picker reading the shared shapes. **Framework / Runner / GitStatus / DeployInfo** — typed fields on a Project; names match across consumers.
-- **domains**, **umami**, **tags**, **descriptions**, **agentInterfaces**, **claudeSetup**, **flow** — Project fields; tags and descriptions live centrally in `~/dev/.atlas-tags.json` / `.atlas-descriptions.json` so they never dirty a repo.
-- **web console** — atlas-api's own UI (`/`, `/ports`, `/processes`, `/system`, `/templates`, `/claude-tree`, `/disk`, `/agents`). **write guard** — `atlas-api/src/lib/guard.ts`, the per-request access check.
-- **process snapshot** / **process kind** / **app row** — `atlas-api/src/lib/processes/`, this Mac only; other hosts' processes are deckhand's.
-- **disk** — `atlas disk`, the disk-space manager (archive · clean · trim), local-only. **board** — `atlas board`, the agents' global message board; not the per-repo **agent journal** (`agent-log`).
+- **Project** (one scanned folder) · **ProjectAtlas** (the scan result, `/api/projects` shape) · **Scanner** (`atlas-api/src/lib/scanner.ts`, source of truth for the shape) · **cache** (`~/dev/.atlas-cache.json`) · **scan config** (`.atlas-config.json`; per-project overrides live in `.atlas`).
+- **slug** → **dev hostname** `<slug>.atlas.local|remote.jurrejan.com`, pushed to the NAS Caddy. **service** — a permanent web UI with a hostname but no project.
+- **host** — a machine in `shared/hosts.json`: `m2` (primary, this Mac), `fractal`, `ubuntu`. **isLocal** — present only on primary-host projects. **alsoOn** — the same project on another host. **scan agent** — the scanner bundled for remote hosts.
+- **action / daemon / host / service / template registry** — the JSON files in `shared/` ("action", never "command" or "button"). **consumer** — atlas-api, atlas-browser or atlas-picker.
+- **web console** (atlas-api's UI) · **write guard** (`atlas-api/src/lib/guard.ts`) · **process snapshot** (this Mac only) · **disk** (`atlas disk`) · **board** (global agent message board) vs **agent journal** (`agent-log`, per repo).
 </vocabulary>
 
 ## Components
@@ -96,19 +87,16 @@ Each `.json` is the single source of truth; `shared/CLAUDE.md` has how each cons
 - **Svelte 5 runes** in atlas-api (`$state`, `$props`, `$effect`), no stores. **Bun** for every TS
   project. **Rust builds** always go through `just reinstall`.
 - atlas-picker renders to `/dev/tty` to keep stdout free for the `pj` shell integration.
-- **The atlas-api daemon serves the adapter-node build (`bun build/index.js`), never `vite dev`**:
-  vite needs ~70s for its first response and health checks kill it mid-boot. Source edits reach
-  the daemon only after `bun run daemon:reload`.
+- **The atlas-api daemon serves the build (`bun build/index.js`), never `vite dev`** (health checks
+  kill vite mid-boot). Source edits reach it only after `bun run daemon:reload`.
 - **Liveness is `GET /api/health`, never `/`**: a UI 500 must not read as "API dead".
 - **A health-probe timeout means busy, not dead.** `isUp()` counts only a refused connection as
   down.
 - **Pollers use `launchctl kickstart` without `-k`.** `-k` SIGKILLs a live-but-slow job; plain
   `kickstart` no-ops on a running one and `KeepAlive` handles crashes. `-k` only in
   `daemon:reload`.
-- **Dev hostnames ride one NAS wildcard cert** (`sites/atlas-wildcard.caddy`, DNS-01): a push is a
-  site file plus `caddy validate` + reload. If that file goes, every `ensureRoute` issues two
-  certs again; the hostname doctor reports `wildcard-missing`. Mechanism:
-  `.orchestrate/findings/mechanism.md`.
+- **Dev hostnames ride one NAS wildcard cert** (`sites/atlas-wildcard.caddy`); without it every
+  `ensureRoute` issues certs again (doctor: `wildcard-missing`). See `.orchestrate/findings/mechanism.md`.
 - **Never store an IP for a host.** The LAN is DHCP without reservations; `hosts.json` holds SSH
   aliases only.
 - **Writes are confined to the primary host by the API, not the UI** (`resolveLocal()`, see
