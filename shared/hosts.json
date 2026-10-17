@@ -21,6 +21,16 @@
       "skipGit": true
     },
     {
+      "id": "fractal-wsl",
+      "label": "Fractal WSL",
+      "ssh": "fractal-wsl",
+      "root": "/home/jurrejan/dev",
+      "os": "linux",
+      "role": "satellite",
+      "node": "/home/jurrejan/.local/bin/node",
+      "agent": "/home/jurrejan/.atlas/atlas-scan.mjs"
+    },
+    {
       "id": "ubuntu",
       "label": "Ubuntu",
       "ssh": "ubuntu",
