@@ -97,6 +97,8 @@ Each `.json` is the single source of truth; `shared/CLAUDE.md` has how each cons
   `daemon:reload`.
 - **Dev hostnames ride one NAS wildcard cert** (`sites/atlas-wildcard.caddy`); without it every
   `ensureRoute` issues certs again (doctor: `wildcard-missing`). See `.orchestrate/findings/mechanism.md`.
+- **Remote hostnames are gated by `forward_auth` → `/gate/<slug>`** (cookie or IP allowlist,
+  `~/dev/.atlas-gate.json`), never by `basic_auth`. See `atlas-api/docs/api.md`.
 - **Never store an IP for a host.** The LAN is DHCP without reservations; `hosts.json` holds SSH
   aliases only.
 - **Writes are confined to the primary host by the API, not the UI** (`resolveLocal()`, see

@@ -7,8 +7,7 @@ export interface ServiceDef {
 	port: number;
 	/** `daemons.json` label, when the service is a launchd daemon. */
 	daemon?: string;
-	/** Also publish `<slug>.atlas.remote` behind the service password (`CADDY_SERVICE_AUTH_HASH`),
-	 *  never the dev-preview one. Off unless set. */
+	/** Also publish `<slug>.atlas.remote`, behind its own gate (`/gate/<slug>`). Off unless set. */
 	remote?: boolean;
 	/** A short LAN name served next to `<slug>.atlas.local`, e.g. `atlas.jurrejan.com`. One label
 	 *  under `jurrejan.com`, so the NAS's `*.jurrejan.com` wildcard cert covers it (no new ACME cert). */
