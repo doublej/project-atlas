@@ -92,8 +92,9 @@ on the user's behalf. Some jobs also run on a schedule with nobody watching.
 - **See the risk of each folder** — every folder has one of three risk levels:
   **rebuildable** (build output and caches, recreated automatically), **reinstallable**
   (dependencies and environments, need a download and some time), or **review** (simulators,
-  container disk images, toolchains, system caches, which may hold state that exists nowhere
-  else). Each folder also shows why it matched, how to get it back, and whether something
+  container disk images, toolchains, system caches, clean git worktrees, which may hold state
+  that exists nowhere else; a worktree is listed only with nothing uncommitted and on a branch,
+  so only its ignored files are lost). Each folder also shows why it matched, how to get it back, and whether something
   seems to be using it right now.
 - **Filter by risk** — the user limits the list or a cleanup to one risk level.
 - **Pick folders to delete** — the user marks one or many (with select all and deselect all),
