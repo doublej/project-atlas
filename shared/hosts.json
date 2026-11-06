@@ -4,10 +4,10 @@
     {
       "id": "m2",
       "label": "M2 Pro",
-      "ssh": null,
+      "ssh": "m2",
       "root": "~/dev",
       "os": "darwin",
-      "role": "primary"
+      "role": "satellite"
     },
     {
       "id": "fractal",
@@ -23,10 +23,10 @@
     {
       "id": "fractal-wsl",
       "label": "Fractal WSL",
-      "ssh": "fractal-wsl",
+      "ssh": null,
       "root": "/home/jurrejan/dev",
       "os": "linux",
-      "role": "satellite",
+      "role": "primary",
       "node": "/home/jurrejan/.local/bin/node",
       "agent": "/home/jurrejan/.atlas/atlas-scan.mjs"
     },
